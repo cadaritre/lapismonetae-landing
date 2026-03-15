@@ -683,21 +683,25 @@
 <section class="downloads" id="downloads">
   <h2 class="reveal">Downloads</h2>
   <div class="divider reveal"></div>
-  <p class="subtitle reveal">All binaries for Windows x64. Download what you need by category.</p>
+  <p class="subtitle reveal">Everything you need in a single release &mdash; Windows x64.</p>
 
-  <!-- Instructions banner -->
-  <div class="instructions-banner reveal">
-    <div class="banner-text">
-      <div class="banner-icon">&#x1F4CB;</div>
-      <div>
-        <h4>Setup Instructions</h4>
-        <p>Step-by-step guide to get your node, wallet, and miner running.</p>
-      </div>
+  <!-- Main download banner -->
+  <div class="instructions-banner reveal" style="justify-content: center; flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; padding: 2.5rem 2rem;">
+    <div style="font-size: 2.5rem;">&#x1F4E6;</div>
+    <div>
+      <h4 style="font-size: 1.3rem;">Lapis Monetae v1.0 &mdash; Windows x64</h4>
+      <p style="margin-top: 0.4rem;">Node, wallet, miner &mdash; all 8 files in one release. Download, extract to a folder, and you're ready.</p>
     </div>
-    <a href="INSTRUCTIONS.txt" download class="btn btn-outline">
-      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-      Download INSTRUCTIONS.txt
-    </a>
+    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
+      <a href="https://github.com/cadaritre/lapismonetae-landing/releases/tag/1.0" target="_blank" class="btn btn-primary" style="font-size: 1.05rem; padding: 0.9rem 2rem;">
+        <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+        Download from GitHub Releases
+      </a>
+      <a href="INSTRUCTIONS.txt" download class="btn btn-outline">
+        <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+        Setup Guide
+      </a>
+    </div>
   </div>
 
   <!-- Category: Node -->
@@ -714,12 +718,14 @@
         </h4>
         <span class="file-name">lmtd.exe</span>
         <p>The full node. Connects to the LMT P2P network, validates blocks and transactions. Required for everything else to work.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-primary" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
+      </div>
+      <div class="download-card">
+        <h4>
+          <span class="tag tag-required">Required</span>
+          RandomX Library
+        </h4>
+        <span class="file-name">randomx.dll</span>
+        <p>Native RandomX PoW library. Must be in the same folder as lmtd.exe for block validation to work.</p>
       </div>
     </div>
   </div>
@@ -738,12 +744,6 @@
         </h4>
         <span class="file-name">lmt-wallet-gui.exe</span>
         <p>Desktop wallet with a dark-themed interface. Create wallets, manage addresses, send transactions. Requires CLI Wallet to function.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-gold" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
       </div>
       <div class="download-card">
         <h4>
@@ -752,12 +752,6 @@
         </h4>
         <span class="file-name">lmt-cli-wallet.exe</span>
         <p>Terminal wallet and RPC interface. Also serves as the backend engine for the Wallet GUI. Must be in the same folder as the GUI.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-primary" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -776,12 +770,6 @@
         </h4>
         <span class="file-name">lmt-miner-gui.exe</span>
         <p>Graphical launcher that manages the Stratum Bridge and XMRig miner. The easiest way to start mining.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-gold" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
       </div>
       <div class="download-card">
         <h4>
@@ -790,12 +778,6 @@
         </h4>
         <span class="file-name">lmt-stratum-bridge.exe</span>
         <p>Connects the node's RPC to XMRig via the LMT-native Stratum protocol. Required for mining.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-primary" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
       </div>
       <div class="download-card">
         <h4>
@@ -804,12 +786,14 @@
         </h4>
         <span class="file-name">xmrig.exe</span>
         <p>XMRig fork adapted for LMT RandomX mining. Connects to the Stratum Bridge to receive jobs and submit shares.</p>
-        <div class="download-actions">
-          <a href="#" class="btn btn-primary" onclick="alert('Release coming soon!')">
-            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download
-          </a>
-        </div>
+      </div>
+      <div class="download-card">
+        <h4>
+          <span class="tag tag-optional">Config</span>
+          Miner Config
+        </h4>
+        <span class="file-name">config.json</span>
+        <p>Default XMRig configuration. Adjust threads, CPU priority, and pool settings to optimize your mining performance.</p>
       </div>
     </div>
   </div>

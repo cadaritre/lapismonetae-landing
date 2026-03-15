@@ -28,6 +28,7 @@
   FILE                        CATEGORY    REQUIRED?
   ─────────────────────────────────────────────────────
   lmtd.exe                    Node        YES — the full node
+  randomx.dll                 Node        YES — RandomX PoW library (same folder as lmtd)
   lmt-cli-wallet.exe          Wallet      YES — CLI wallet / GUI backend
   lmt-wallet-gui.exe          Wallet      Optional — desktop wallet GUI
   lmt-stratum-bridge.exe      Mining      YES (for mining)
@@ -43,6 +44,7 @@
 
   C:\LMT\
     ├── lmtd.exe
+    ├── randomx.dll
     ├── lmt-cli-wallet.exe
     ├── lmt-wallet-gui.exe
     ├── lmt-stratum-bridge.exe
