@@ -1,0 +1,225 @@
+================================================================================
+              LAPIS MONETAE (LMT) — SETUP INSTRUCTIONS
+================================================================================
+
+  Version:  1.0.1
+  Website:  https://lapismonetae.org
+  GitHub:   https://github.com/nicokeyboard/lapis-monetae
+  License:  ISC
+
+================================================================================
+  TABLE OF CONTENTS
+================================================================================
+
+  1. Overview & Files
+  2. Folder Setup
+  3. Running the Node
+  4. Wallet Setup
+  5. Mining Setup
+  6. Network Ports
+  7. Troubleshooting
+
+================================================================================
+  1. OVERVIEW & FILES
+================================================================================
+
+  You should have 7 binaries + 1 config file:
+
+  FILE                        CATEGORY    REQUIRED?
+  ─────────────────────────────────────────────────────
+  lmtd.exe                    Node        YES — the full node
+  lmt-cli-wallet.exe          Wallet      YES — CLI wallet / GUI backend
+  lmt-wallet-gui.exe          Wallet      Optional — desktop wallet GUI
+  lmt-stratum-bridge.exe      Mining      YES (for mining)
+  xmrig.exe                   Mining      YES (for mining)
+  lmt-miner-gui.exe           Mining      Optional — miner GUI launcher
+  config.json                 Mining      Miner configuration
+
+================================================================================
+  2. FOLDER SETUP
+================================================================================
+
+  Put all binaries in the SAME folder. Example:
+
+  C:\LMT\
+    ├── lmtd.exe
+    ├── lmt-cli-wallet.exe
+    ├── lmt-wallet-gui.exe
+    ├── lmt-stratum-bridge.exe
+    ├── xmrig.exe
+    ├── lmt-miner-gui.exe
+    └── config.json
+
+  IMPORTANT: The Wallet GUI needs lmt-cli-wallet.exe in the same directory
+  (or in your system PATH) to work. They are NOT independent.
+
+================================================================================
+  3. RUNNING THE NODE
+================================================================================
+
+  The node (lmtd.exe) must be running before you can use wallets or mine.
+
+  STEP 1 — Open PowerShell or CMD in your LMT folder.
+
+  STEP 2 — Start the node:
+
+    .\lmtd.exe --utxoindex
+
+    Flags:
+      --utxoindex          Required for wallet operations
+      --rpclisten-json=default   Enable JSON wRPC (optional)
+      --rpclisten-borsh=default  Enable Borsh wRPC (optional)
+
+  STEP 3 — Wait for the node to sync with the network.
+    The first sync may take a while. You will see log output showing
+    block progress. The node is ready when it says "Node is synced".
+
+  To run on testnet:
+
+    .\lmtd.exe --utxoindex --testnet
+
+  To enable mining on a fresh/local node (before it syncs):
+
+    .\lmtd.exe --utxoindex --enable-unsynced-mining
+
+================================================================================
+  4. WALLET SETUP
+================================================================================
+
+  ── Option A: Wallet GUI (recommended for beginners) ──
+
+  1. Make sure lmtd.exe is running with --utxoindex.
+  2. Make sure lmt-cli-wallet.exe is in the same folder.
+  3. Double-click lmt-wallet-gui.exe.
+  4. The GUI will auto-detect the CLI wallet binary.
+  5. Create a new wallet or import an existing one.
+
+  Features:
+    • Create/import wallets
+    • Manage multiple addresses
+    • Send and receive LMT
+    • Connect to mainnet, testnet-10, testnet-11
+    • View balances and transaction history
+
+  ── Option B: CLI Wallet (terminal) ──
+
+  1. Make sure lmtd.exe is running with --utxoindex.
+  2. Open a NEW terminal in your LMT folder.
+  3. Run:
+
+    .\lmt-cli-wallet.exe
+
+  4. You will enter an interactive terminal. Common commands:
+
+    wallet create           Create a new wallet
+    wallet open             Open an existing wallet
+    list                    Show accounts and balances
+    address show            Show your receive address
+    send <address> <amount> Send LMT
+    network mainnet         Switch to mainnet
+    network testnet-10      Switch to testnet
+    help                    Show all commands
+
+  IMPORTANT: Your wallet address starts with "lmt:" on mainnet.
+  Example: lmt:qr35ennsep3hxfe7lnz5ee7j5jgmkjs8tgsqpj365
+
+================================================================================
+  5. MINING SETUP
+================================================================================
+
+  Mining requires 3 components running simultaneously:
+    1. The node (lmtd.exe)
+    2. The Stratum Bridge (lmt-stratum-bridge.exe)
+    3. The XMRig miner (xmrig.exe)
+
+  ── Option A: Miner GUI (easiest) ──
+
+  1. Make sure lmtd.exe is running.
+  2. Double-click lmt-miner-gui.exe.
+  3. In the GUI, configure:
+     • Bridge binary path:  (browse to lmt-stratum-bridge.exe)
+     • XMRig binary path:   (browse to xmrig.exe)
+     • RPC URL:             grpc://127.0.0.1:26110
+     • XMRig URL:           stratum+tcp://127.0.0.1:3333
+     • Pay address:         your lmt: address
+  4. Click Start.
+
+  ── Option B: Manual (terminal) ──
+
+  STEP 1 — Start the node (if not already running):
+
+    .\lmtd.exe --utxoindex --enable-unsynced-mining
+
+  STEP 2 — Start the Stratum Bridge (new terminal):
+
+    .\lmt-stratum-bridge.exe
+
+    The bridge connects to the node's gRPC at 127.0.0.1:26110
+    and listens for miners on port 3333.
+
+  STEP 3 — Start XMRig (new terminal):
+
+    .\xmrig.exe -o stratum+tcp://127.0.0.1:3333 -u <YOUR_LMT_ADDRESS>
+
+    Replace <YOUR_LMT_ADDRESS> with your wallet address (lmt:...).
+
+  If everything works, you will see hashrate output from XMRig and
+  "Share accepted" messages.
+
+  NOTE: config.json contains default XMRig configuration. You can edit it
+  to adjust threads, priority, and other miner settings.
+
+================================================================================
+  6. NETWORK PORTS
+================================================================================
+
+  Make sure these ports are available (or adjust with CLI flags):
+
+  NETWORK       P2P     gRPC     wRPC Borsh   wRPC JSON
+  ───────────────────────────────────────────────────────
+  Mainnet       26111   26110    27110         28110
+  Testnet-10    26211   26210    27210         28210
+  Testnet-11    26311   26210    27210         28210
+  Simnet        26511   26510    27510         28510
+  Devnet        26611   26610    27610         28610
+
+  For mining, the Stratum Bridge also uses port 3333 (configurable).
+
+================================================================================
+  7. TROUBLESHOOTING
+================================================================================
+
+  PROBLEM: Node won't start
+    → Check that ports 26110-26111 are not already in use.
+    → Try running as Administrator if you get permission errors.
+
+  PROBLEM: Wallet GUI says "CLI binary not found"
+    → Make sure lmt-cli-wallet.exe is in the SAME folder as the GUI.
+    → Or set the LMT_CLI_BIN environment variable to the full path.
+
+  PROBLEM: Wallet can't connect to node
+    → Make sure lmtd.exe is running with --utxoindex.
+    → Check that the node has fully synced.
+
+  PROBLEM: Mining not working / no shares
+    → Verify the node is running with --utxoindex --enable-unsynced-mining.
+    → Check that the bridge is connecting to gRPC port 26110.
+    → Make sure xmrig connects to stratum+tcp://127.0.0.1:3333.
+    → Verify your pay address starts with "lmt:" and is valid.
+
+  PROBLEM: Low hashrate
+    → Close other CPU-intensive applications.
+    → Edit config.json to adjust thread count and CPU priority.
+    → RandomX benefits from large L3 cache (optimal: 2MB per thread).
+
+  PROBLEM: Build errors (compiling from source)
+    → Ensure protoc (protobuf compiler) is installed and in PATH.
+    → On Windows, verify LLVM bin directory is in PATH.
+    → Run: rustup update
+
+================================================================================
+
+  Need help? Open an issue on GitHub:
+  https://github.com/nicokeyboard/lapis-monetae/issues
+
+================================================================================
