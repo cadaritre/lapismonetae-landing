@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lapis Monetae — LMT</title>
+  <link rel="icon" href="../wallet-gui/assets/lmt_icon_64.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep: #050a14;
+      --bg-card: rgba(12, 22, 42, 0.65);
+      --blue-primary: #1a6dd4;
+      --blue-light: #3b9aed;
+      --blue-glow: #1a6dd455;
+      --gold: #d4a21a;
+      --gold-light: #f0c850;
+      --text: #e4eaf4;
+      --text-dim: #8899b4;
+      --border: rgba(58, 100, 170, 0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── Canvas background ─── */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 10, 20, 0.7);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    nav .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    nav .logo-group img {
+      height: 36px;
+      filter: drop-shadow(0 0 8px var(--blue-glow));
+    }
+
+    nav .logo-group span {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, var(--blue-light), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: color 0.25s;
+    }
+
+    nav .nav-links a:hover { color: var(--gold-light); }
+
+    /* ─── Sections shared ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.22,.61,.36,1), transform 0.7s cubic-bezier(.22,.61,.36,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 2rem;
+      padding-top: 5rem;
+    }
+
+    .hero-logo {
+      width: 180px;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 40px var(--blue-glow));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--blue-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 560px;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-primary), var(--blue-light));
+      color: #fff;
+      box-shadow: 0 4px 24px var(--blue-glow);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 36px var(--blue-glow);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #0a0e18;
+      box-shadow: 0 4px 24px rgba(212, 162, 26, 0.25);
+    }
+
+    .btn-gold:hover {
+      box-shadow: 0 8px 36px rgba(212, 162, 26, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      backdrop-filter: blur(6px);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--blue-light);
+      box-shadow: 0 0 20px var(--blue-glow);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ─── Features ─── */
+    .features {
+      padding: 6rem 2rem;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--blue-light);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-icon.blue { background: rgba(26, 109, 212, 0.15); }
+    .feature-icon.gold { background: rgba(212, 162, 26, 0.15); }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--text-dim);
+      font-size: 0.92rem;
+      font-weight: 300;
+    }
+
+    /* ─── Stats ─── */
+    .stats {
+      padding: 4rem 2rem;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--blue-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 400;
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ─── Downloads ─── */
+    .downloads {
+      padding: 6rem 2rem;
+    }
+
+    .downloads h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .downloads .subtitle {
+      text-align: center;
+      color: var(--text-dim);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      font-size: 1.05rem;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .download-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .download-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .download-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .download-card p {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 300;
+      flex: 1;
+    }
+
+    .download-card .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tag-gui { background: rgba(212, 162, 26, 0.15); color: var(--gold-light); }
+    .tag-cli { background: rgba(26, 109, 212, 0.15); color: var(--blue-light); }
+    .tag-miner { background: rgba(80, 200, 120, 0.15); color: #50c878; }
+
+    .download-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .download-actions .btn {
+      font-size: 0.82rem;
+      padding: 0.55rem 1.1rem;
+    }
+
+    /* ─── Code block ─── */
+    .quickstart {
+      padding: 4rem 2rem 6rem;
+    }
+
+    .quickstart h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .code-block {
+      background: rgba(8, 14, 28, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block .prompt { color: var(--gold); }
+    .code-block .cmd { color: var(--text); }
+    .code-block .comment { color: #4a5a74; }
+
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: var(--blue-light);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ─── Glow accent ─── */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-blue {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(26, 109, 212, 0.12), transparent 70%);
+    }
+
+    .glow-gold {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 162, 26, 0.08), transparent 70%);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+      .stats-row { gap: 2rem; }
+      .hero-logo { width: 130px; }
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue-primary), var(--gold));
+      margin: 0 auto 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- Nav -->
+<nav>
+  <div class="logo-group">
+    <img src="../wallet-gui/assets/lmt_icon_64.png" alt="LMT">
+    <span>Lapis Monetae</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#quickstart">Quick Start</a></li>
+    <li><a href="https://github.com/nicokeyboard/lapis-monetae" target="_blank">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="glow-orb glow-blue" style="top: -100px; left: -150px;"></div>
+  <div class="glow-orb glow-gold" style="top: 200px; right: -100px;"></div>
+
+  <img src="../wallet-gui/assets/lmt_logo.png" alt="Lapis Monetae" class="hero-logo reveal">
+
+  <h1 class="reveal" style="transition-delay: 0.12s;">
+    The Stone of<br><span class="gradient">Digital Currency</span>
+  </h1>
+
+  <p class="reveal" style="transition-delay: 0.24s;">
+    Lapis Monetae (LMT) &mdash; a fast, fair, and community-driven cryptocurrency powered by RandomX Proof-of-Work. Mine with your CPU, run a node, join the network.
+  </p>
+
+  <div class="hero-cta reveal" style="transition-delay: 0.36s;">
+    <a href="#downloads" class="btn btn-primary">
+      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+      Download
+    </a>
+    <a href="#quickstart" class="btn btn-outline">Quick Start</a>
+    <a href="https://github.com/nicokeyboard/lapis-monetae" target="_blank" class="btn btn-outline">
+      <svg viewBox="0 0 24 24"><path d="M12 .5C5.37.5 0 5.78 0 12.3c0 5.21 3.44 9.65 8.2 11.22.6.11.82-.26.82-.57v-2.18c-3.34.71-4.04-1.42-4.04-1.42-.55-1.36-1.34-1.72-1.34-1.72-1.09-.73.08-.72.08-.72 1.21.08 1.85 1.22 1.85 1.22 1.07 1.81 2.81 1.29 3.5.99.1-.77.42-1.29.76-1.59-2.67-.3-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.5.12-3.12 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 016.01 0c2.3-1.53 3.3-1.21 3.3-1.21.66 1.62.25 2.82.12 3.12.77.83 1.24 1.88 1.24 3.17 0 4.54-2.81 5.53-5.48 5.83.43.37.82 1.1.82 2.21v3.28c0 .31.21.69.83.57C20.57 21.94 24 17.51 24 12.3 24 5.78 18.63.5 12 .5z"/></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats" id="stats">
+  <div class="stats-row reveal">
+    <div class="stat">
+      <div class="stat-value">100M</div>
+      <div class="stat-label">Max Supply</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">~8 yr</div>
+      <div class="stat-label">Emission Period</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">RandomX</div>
+      <div class="stat-label">PoW Algorithm</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">CPU</div>
+      <div class="stat-label">Mining Friendly</div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <h2 class="reveal">Why Lapis Monetae?</h2>
+  <div class="divider reveal"></div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon blue">&#x26CF;</div>
+      <h3>CPU-Mineable</h3>
+      <p>RandomX PoW ensures fair mining with any modern CPU. No ASICs, no GPU farms &mdash; just your hardware.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon gold">&#x26A1;</div>
+      <h3>Fast BlockDAG</h3>
+      <p>Built on a DAG-based consensus for high throughput and rapid confirmation times.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon blue">&#x1F512;</div>
+      <h3>Fair Launch</h3>
+      <p>No premine, no ICO. 100M LMT distributed purely through mining over ~8 years.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon gold">&#x1F6E0;</div>
+      <h3>Full Tooling</h3>
+      <p>Desktop wallet GUI, CLI wallet, Stratum bridge, XMRig miner &mdash; everything you need in one place.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon blue">&#x1F310;</div>
+      <h3>Open Source</h3>
+      <p>100% open source under the ISC license. Audit, contribute, and build on top of the LMT network.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon gold">&#x1F91D;</div>
+      <h3>Community Driven</h3>
+      <p>Built by the community, for the community. No corporate backing &mdash; just passionate developers and miners.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Downloads -->
+<section class="downloads" id="downloads">
+  <h2 class="reveal">Downloads</h2>
+  <div class="divider reveal"></div>
+  <p class="subtitle reveal">Get the latest binaries and GUI tools for Windows.</p>
+
+  <div class="download-grid">
+
+    <div class="download-card reveal">
+      <h3>
+        <span class="tag tag-cli">Node</span>
+        LMT Daemon (lmtd)
+      </h3>
+      <p>The full node binary. Run your own LMT node and support the network. Required for mining and wallet operations.</p>
+      <div class="download-actions">
+        <a href="#" class="btn btn-primary btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          Windows x64
+        </a>
+        <a href="#" class="btn btn-outline btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          Linux x64
+        </a>
+      </div>
+    </div>
+
+    <div class="download-card reveal">
+      <h3>
+        <span class="tag tag-gui">GUI</span>
+        Wallet GUI
+      </h3>
+      <p>Desktop wallet with a dark-themed interface. Create wallets, manage addresses, send transactions, and connect to multiple networks.</p>
+      <div class="download-actions">
+        <a href="#" class="btn btn-gold btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          Windows Installer
+        </a>
+      </div>
+    </div>
+
+    <div class="download-card reveal">
+      <h3>
+        <span class="tag tag-miner">Miner</span>
+        XMRig-LMT + Stratum Bridge
+      </h3>
+      <p>All-in-one mining suite. Includes the LMT Stratum bridge, XMRig fork, and a GUI launcher to manage everything.</p>
+      <div class="download-actions">
+        <a href="#" class="btn btn-primary btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          Mining Suite
+        </a>
+      </div>
+    </div>
+
+    <div class="download-card reveal">
+      <h3>
+        <span class="tag tag-cli">CLI</span>
+        CLI Wallet
+      </h3>
+      <p>Terminal-based wallet and RPC interface. Full access to all wallet features and node commands via the command line.</p>
+      <div class="download-actions">
+        <a href="#" class="btn btn-outline btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          Windows x64
+        </a>
+        <a href="#" class="btn btn-outline btn-sm" onclick="alert('Release binary coming soon! Build from source in the meantime.')">
+          Linux x64
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick Start -->
+<section class="quickstart" id="quickstart">
+  <h2 class="reveal">Quick Start</h2>
+  <div class="divider reveal"></div>
+  <div class="code-block reveal">
+    <span class="comment"># Clone the repository</span><br>
+    <span class="prompt">$</span> <span class="cmd">git clone https://github.com/nicokeyboard/lapis-monetae.git</span><br>
+    <span class="prompt">$</span> <span class="cmd">cd lapis-monetae</span><br><br>
+    <span class="comment"># Run a mainnet node</span><br>
+    <span class="prompt">$</span> <span class="cmd">cargo run --release --bin lmtd -- --utxoindex</span><br><br>
+    <span class="comment"># Start mining (in another terminal)</span><br>
+    <span class="prompt">$</span> <span class="cmd">cd tools/xmrig-lmt/gui</span><br>
+    <span class="prompt">$</span> <span class="cmd">python app.py</span>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>
+    &copy; 2025 Lapis Monetae &mdash; ISC License &mdash;
+    <a href="https://github.com/nicokeyboard/lapis-monetae" target="_blank">GitHub</a>
+    &mdash; by cadaritre
+  </p>
+</footer>
+
+<script>
+  // Particle system
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const PARTICLE_COUNT = 60;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.r = Math.random() * 1.8 + 0.5;
+      this.alpha = Math.random() * 0.4 + 0.08;
+      this.isGold = Math.random() > 0.75;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.isGold
+        ? `rgba(212, 162, 26, ${this.alpha})`
+        : `rgba(59, 154, 237, ${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 160) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(59, 154, 237, ${0.06 * (1 - dist / 160)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawLines();
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
