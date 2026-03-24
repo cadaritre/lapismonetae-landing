@@ -12,8 +12,8 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg-deep: #060b16;
-      --bg-card: rgba(14, 24, 48, 0.55);
+      --bg-deep: #0c1425;
+      --bg-card: rgba(18, 32, 60, 0.6);
       --blue-primary: #2563eb;
       --blue-light: #60a5fa;
       --blue-glow: rgba(37, 99, 235, 0.2);
@@ -21,7 +21,7 @@
       --gold-light: #e8be5a;
       --text: #e8ecf4;
       --text-dim: #7b8fad;
-      --border: rgba(50, 90, 160, 0.12);
+      --border: rgba(50, 90, 160, 0.18);
     }
 
     html { scroll-behavior: smooth; }
@@ -60,7 +60,7 @@
       align-items: center;
       justify-content: space-between;
       backdrop-filter: blur(18px);
-      background: rgba(5, 10, 20, 0.7);
+      background: rgba(10, 18, 34, 0.75);
       border-bottom: 1px solid var(--border);
       transition: background 0.3s, transform 0.3s;
     }
@@ -97,10 +97,15 @@
       font-weight: 500;
       font-size: 0.9rem;
       letter-spacing: 0.03em;
-      transition: color 0.25s;
+      transition: color 0.25s, border-color 0.25s;
+      padding-bottom: 0.25rem;
+      border-bottom: 1.5px solid transparent;
     }
 
-    nav .nav-links a:hover { color: var(--gold-light); }
+    nav .nav-links a:hover {
+      color: var(--text);
+      border-bottom-color: var(--gold-light);
+    }
 
     section {
       position: relative;
@@ -164,10 +169,12 @@
     }
 
     .hero p {
-      max-width: 560px;
+      max-width: 600px;
       color: var(--text-dim);
-      font-size: 1.1rem;
-      font-weight: 300;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
     }
 
     .hero-cta {
@@ -226,7 +233,7 @@
 
     .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .features { padding: 6rem 2rem; }
+    .features { padding: 8rem 2rem; }
 
     .features h2 {
       text-align: center;
@@ -237,7 +244,7 @@
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
@@ -271,7 +278,7 @@
     .feature-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
     .feature-card p { color: var(--text-dim); font-size: 0.92rem; font-weight: 300; }
 
-    .stats { padding: 4rem 2rem; }
+    .stats { padding: 5rem 2rem; }
 
     .stats-row {
       display: flex;
@@ -299,7 +306,7 @@
       text-transform: uppercase;
     }
 
-    .downloads { padding: 6rem 2rem; }
+    .downloads { padding: 8rem 2rem; }
 
     .downloads h2 {
       text-align: center;
@@ -436,7 +443,7 @@
     .instructions-banner h4 { font-size: 1rem; font-weight: 600; }
     .instructions-banner p { color: var(--text-dim); font-size: 0.82rem; font-weight: 300; }
 
-    .quickstart { padding: 4rem 2rem 6rem; }
+    .quickstart { padding: 6rem 2rem 8rem; }
 
     .quickstart h2 {
       text-align: center;
@@ -446,7 +453,7 @@
     }
 
     .code-block {
-      background: rgba(8, 14, 28, 0.85);
+      background: rgba(10, 18, 34, 0.85);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 1.5rem 2rem;
@@ -468,15 +475,60 @@
       position: relative;
       z-index: 1;
       border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem;
+      padding: 3.5rem 2rem 2.5rem;
       text-align: center;
       color: var(--text-dim);
       font-size: 0.85rem;
       font-weight: 300;
     }
 
-    footer a { color: var(--blue-light); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-logo img {
+      height: 24px;
+      opacity: 0.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.25s;
+    }
+
+    .footer-links a:hover { color: var(--blue-light); }
+
+    footer .copyright {
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      opacity: 0.7;
+    }
+
+    footer .copyright a { color: var(--blue-light); text-decoration: none; }
+    footer .copyright a:hover { text-decoration: underline; }
 
     .glow-orb {
       position: absolute;
@@ -530,12 +582,19 @@
       100% { width: 120px; height: 120px; opacity: 0; }
     }
 
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .download-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 640px) {
       nav .nav-links { display: none; }
       .stats-row { gap: 2rem; }
       .hero-logo { width: 130px; }
       body { perspective: none; }
       .sheet { transform: none !important; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-links { gap: 1rem; }
     }
 
     .divider {
@@ -759,10 +818,19 @@
 </section>
 
 <footer>
-  <p>
-    &copy; 2025 Lapis Monetae &mdash; ISC License &mdash;
-    <a href="https://github.com/cadaritre/Lapis-monetae" target="_blank">GitHub</a>
-  </p>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="assets/lmt_icon_64.png" alt="LMT">
+      Lapis Monetae
+    </div>
+    <ul class="footer-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#quickstart">Quick Start</a></li>
+      <li><a href="#downloads">Downloads</a></li>
+      <li><a href="https://github.com/cadaritre/Lapis-monetae" target="_blank">GitHub</a></li>
+    </ul>
+    <p class="copyright">&copy; 2025 Lapis Monetae &mdash; ISC License</p>
+  </div>
 </footer>
 
 </div>
