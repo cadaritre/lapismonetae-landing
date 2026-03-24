@@ -999,8 +999,8 @@
   document.addEventListener('mousemove', function(e) {
     var cx = window.innerWidth / 2;
     var cy = window.innerHeight / 2;
-    stx = ((e.clientY - cy) / cy) * -0.5;
-    sty = ((e.clientX - cx) / cx) * 0.5;
+    stx = ((e.clientY - cy) / cy) * -0.3;
+    sty = ((e.clientX - cx) / cx) * 0.3;
   });
 
   function updateSheet() {
@@ -1025,13 +1025,12 @@
       var dist = Math.sqrt(dx * dx + dy * dy);
       var maxD = 600;
       if (dist < maxD) {
-        var f = (1 - dist / maxD) * 0.25;
-        var rx = (dy / maxD) * -1.2 * f;
-        var ry = (dx / maxD) * 1.2 * f;
-        var tz = f * 3;
-        s.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(' + tz + 'px)';
+        var f = (1 - dist / maxD) * 0.15;
+        var rx = (dy / maxD) * -0.8 * f;
+        var ry = (dx / maxD) * 0.8 * f;
+        s.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
       } else {
-        s.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        s.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
       }
     }
     requestAnimationFrame(updateWaveSections);
@@ -1054,16 +1053,13 @@
       if (dist < radius) {
         var f = (1 - dist / radius);
         var e = f * f;
-        var ry = (dx / radius) * 5 * e;
-        var rx = (dy / radius) * -5 * e;
-        var tz = e * 8;
-        var tx = (dx / radius) * 2 * e;
-        var ty = (dy / radius) * 2 * e;
+        var ry = (dx / radius) * 4 * e;
+        var rx = (dy / radius) * -4 * e;
         var glow = e * 0.06;
-        card.style.transform = 'perspective(600px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(' + tz + 'px) translate(' + tx + 'px,' + ty + 'px)';
-        card.style.boxShadow = '0 ' + (4 + e * 10) + 'px ' + (20 + e * 15) + 'px rgba(37,99,235,' + (0.05 + glow) + ')';
+        card.style.transform = 'perspective(600px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+        card.style.boxShadow = '0 ' + (4 + e * 8) + 'px ' + (20 + e * 12) + 'px rgba(37,99,235,' + (0.05 + glow) + ')';
       } else {
-        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) translateZ(0px) translate(0px,0px)';
+        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
         card.style.boxShadow = '';
       }
     }
