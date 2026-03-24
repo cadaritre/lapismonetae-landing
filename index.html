@@ -597,6 +597,36 @@
       .footer-links { gap: 1rem; }
     }
 
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(50, 90, 160, 0.12);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      color: var(--text-dim);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: color 0.25s, border-color 0.25s;
+      text-transform: uppercase;
+    }
+
+    .lang-toggle:hover {
+      color: var(--text);
+      border-color: var(--blue-light);
+    }
+
+    .lang-toggle svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      opacity: 0.7;
+    }
+
     .divider {
       width: 60px;
       height: 3px;
@@ -619,10 +649,11 @@
     <span>Lapis Monetae</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#quickstart">Quick Start</a></li>
-    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#features" data-i18n="nav.features">Features</a></li>
+    <li><a href="#quickstart" data-i18n="nav.quickstart">Quick Start</a></li>
+    <li><a href="#downloads" data-i18n="nav.downloads">Downloads</a></li>
     <li><a href="https://github.com/cadaritre/Lapis-monetae" target="_blank">GitHub</a></li>
+    <li><button class="lang-toggle" id="lang-toggle" aria-label="Switch language"><svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg><span id="lang-label">EN</span></button></li>
   </ul>
 </nav>
 
@@ -632,20 +663,20 @@
 
   <img src="assets/lmt_logo.png" alt="Lapis Monetae" class="hero-logo reveal">
 
-  <h1 class="reveal" style="transition-delay: 0.12s;">
+  <h1 class="reveal" style="transition-delay: 0.12s;" data-i18n="hero.title" data-i18n-html="true">
     The Stone of<br><span class="gradient">Digital Currency</span>
   </h1>
 
-  <p class="reveal" style="transition-delay: 0.24s;">
+  <p class="reveal" style="transition-delay: 0.24s;" data-i18n="hero.subtitle">
     Lapis Monetae (LMT) &mdash; a fast, fair, and community-driven cryptocurrency powered by RandomX Proof-of-Work. Mine with your CPU, run a node, join the network.
   </p>
 
   <div class="hero-cta reveal" style="transition-delay: 0.36s;">
     <a href="#downloads" class="btn btn-primary">
       <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-      Download
+      <span data-i18n="hero.download">Download</span>
     </a>
-    <a href="#quickstart" class="btn btn-outline">Quick Start</a>
+    <a href="#quickstart" class="btn btn-outline" data-i18n="hero.quickstart">Quick Start</a>
     <a href="https://github.com/cadaritre/Lapis-monetae" target="_blank" class="btn btn-outline">
       <svg viewBox="0 0 24 24"><path d="M12 .5C5.37.5 0 5.78 0 12.3c0 5.21 3.44 9.65 8.2 11.22.6.11.82-.26.82-.57v-2.18c-3.34.71-4.04-1.42-4.04-1.42-.55-1.36-1.34-1.72-1.34-1.72-1.09-.73.08-.72.08-.72 1.21.08 1.85 1.22 1.85 1.22 1.07 1.81 2.81 1.29 3.5.99.1-.77.42-1.29.76-1.59-2.67-.3-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.5.12-3.12 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 016.01 0c2.3-1.53 3.3-1.21 3.3-1.21.66 1.62.25 2.82.12 3.12.77.83 1.24 1.88 1.24 3.17 0 4.54-2.81 5.53-5.48 5.83.43.37.82 1.1.82 2.21v3.28c0 .31.21.69.83.57C20.57 21.94 24 17.51 24 12.3 24 5.78 18.63.5 12 .5z"/></svg>
       GitHub
@@ -654,38 +685,38 @@
 </section>
 
 <section class="features wave-section" id="features">
-  <h2 class="reveal">Why Lapis Monetae?</h2>
+  <h2 class="reveal" data-i18n="features.title">Why Lapis Monetae?</h2>
   <div class="divider reveal"></div>
   <div class="features-grid">
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon blue">&#x26CF;</div>
-      <h3>CPU-Mineable</h3>
-      <p>RandomX PoW ensures fair mining with any modern CPU. No ASICs, no GPU farms &mdash; just your hardware.</p>
+      <h3 data-i18n="features.cpu.title">CPU-Mineable</h3>
+      <p data-i18n="features.cpu.desc">RandomX PoW ensures fair mining with any modern CPU. No ASICs, no GPU farms &mdash; just your hardware.</p>
     </div>
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon gold">&#x26A1;</div>
-      <h3>Fast BlockDAG</h3>
-      <p>Built on a DAG-based consensus for high throughput and rapid confirmation times.</p>
+      <h3 data-i18n="features.dag.title">Fast BlockDAG</h3>
+      <p data-i18n="features.dag.desc">Built on a DAG-based consensus for high throughput and rapid confirmation times.</p>
     </div>
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon blue">&#x1F512;</div>
-      <h3>Fair Launch</h3>
-      <p>No premine, no ICO. 100M LMT distributed purely through mining over ~8 years.</p>
+      <h3 data-i18n="features.fair.title">Fair Launch</h3>
+      <p data-i18n="features.fair.desc">No premine, no ICO. 100M LMT distributed purely through mining over ~8 years.</p>
     </div>
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon gold">&#x1F6E0;</div>
-      <h3>Full Tooling</h3>
-      <p>Desktop wallet GUI, CLI wallet, Stratum bridge, XMRig miner &mdash; everything you need in one place.</p>
+      <h3 data-i18n="features.tooling.title">Full Tooling</h3>
+      <p data-i18n="features.tooling.desc">Desktop wallet GUI, CLI wallet, Stratum bridge, XMRig miner &mdash; everything you need in one place.</p>
     </div>
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon blue">&#x1F310;</div>
-      <h3>Open Source</h3>
-      <p>100% open source under the ISC license. Audit, contribute, and build on top of the LMT network.</p>
+      <h3 data-i18n="features.open.title">Open Source</h3>
+      <p data-i18n="features.open.desc">100% open source under the ISC license. Audit, contribute, and build on top of the LMT network.</p>
     </div>
     <div class="feature-card reveal cloth-card">
       <div class="feature-icon gold">&#x1F91D;</div>
-      <h3>Community Driven</h3>
-      <p>Built by the community, for the community. No corporate backing &mdash; just passionate developers and miners.</p>
+      <h3 data-i18n="features.community.title">Community Driven</h3>
+      <p data-i18n="features.community.desc">Built by the community, for the community. No corporate backing &mdash; just passionate developers and miners.</p>
     </div>
   </div>
 </section>
@@ -694,25 +725,25 @@
   <div class="stats-row reveal">
     <div class="stat">
       <div class="stat-value">100M</div>
-      <div class="stat-label">Max Supply</div>
+      <div class="stat-label" data-i18n="stats.supply">Max Supply</div>
     </div>
     <div class="stat">
       <div class="stat-value">~8 yr</div>
-      <div class="stat-label">Emission Period</div>
+      <div class="stat-label" data-i18n="stats.emission">Emission Period</div>
     </div>
     <div class="stat">
       <div class="stat-value">RandomX</div>
-      <div class="stat-label">PoW Algorithm</div>
+      <div class="stat-label" data-i18n="stats.algorithm">PoW Algorithm</div>
     </div>
     <div class="stat">
       <div class="stat-value">CPU</div>
-      <div class="stat-label">Mining Friendly</div>
+      <div class="stat-label" data-i18n="stats.mining">Mining Friendly</div>
     </div>
   </div>
 </section>
 
 <section class="quickstart wave-section" id="quickstart">
-  <h2 class="reveal">Quick Start</h2>
+  <h2 class="reveal" data-i18n="quickstart.title">Quick Start</h2>
   <div class="divider reveal"></div>
   <div class="code-block reveal cloth-card">
     <span class="comment"># Clone the repository</span><br>
@@ -727,24 +758,24 @@
 </section>
 
 <section class="downloads wave-section" id="downloads">
-  <h2 class="reveal">Downloads</h2>
+  <h2 class="reveal" data-i18n="downloads.title">Downloads</h2>
   <div class="divider reveal"></div>
-  <p class="subtitle reveal">Everything you need in a single release &mdash; Windows x64.</p>
+  <p class="subtitle reveal" data-i18n="downloads.subtitle">Everything you need in a single release &mdash; Windows x64.</p>
 
   <div class="instructions-banner reveal cloth-card" style="justify-content: center; flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; padding: 2.5rem 2rem;">
     <div style="font-size: 2.5rem;">&#x1F4E6;</div>
     <div>
-      <h4 style="font-size: 1.3rem;">Lapis Monetae v1.0 &mdash; Windows x64</h4>
-      <p style="margin-top: 0.4rem;">Node, wallet, miner &mdash; all 8 files in one release. Download, extract to a folder, and you're ready.</p>
+      <h4 style="font-size: 1.3rem;" data-i18n="downloads.banner.title">Lapis Monetae v1.0 &mdash; Windows x64</h4>
+      <p style="margin-top: 0.4rem;" data-i18n="downloads.banner.desc">Node, wallet, miner &mdash; all 8 files in one release. Download, extract to a folder, and you're ready.</p>
     </div>
     <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
       <a href="https://github.com/cadaritre/lapismonetae-landing/releases/tag/1.0" target="_blank" class="btn btn-primary" style="font-size: 1.05rem; padding: 0.9rem 2rem;">
         <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-        Download from GitHub Releases
+        <span data-i18n="downloads.banner.btn">Download from GitHub Releases</span>
       </a>
       <a href="INSTRUCTIONS.txt" download class="btn btn-outline">
         <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-        Setup Guide
+        <span data-i18n="downloads.banner.guide">Setup Guide</span>
       </a>
     </div>
   </div>
@@ -752,18 +783,18 @@
   <div class="download-category reveal">
     <div class="category-header">
       <div class="category-icon cat-node">&#x1F5A5;</div>
-      <h3>Node <small>Run the LMT network infrastructure</small></h3>
+      <h3>Node <small data-i18n="downloads.node.sub">Run the LMT network infrastructure</small></h3>
     </div>
     <div class="download-grid">
       <div class="download-card cloth-card">
         <h4><span class="tag tag-required">Required</span> LMT Daemon</h4>
         <span class="file-name">lmtd.exe</span>
-        <p>The full node. Connects to the LMT P2P network, validates blocks and transactions. Required for everything else to work.</p>
+        <p data-i18n="downloads.lmtd.desc">The full node. Connects to the LMT P2P network, validates blocks and transactions. Required for everything else to work.</p>
       </div>
       <div class="download-card cloth-card">
         <h4><span class="tag tag-required">Required</span> RandomX Library</h4>
         <span class="file-name">randomx.dll</span>
-        <p>Native RandomX PoW library. Must be in the same folder as lmtd.exe for block validation to work.</p>
+        <p data-i18n="downloads.randomx.desc">Native RandomX PoW library. Must be in the same folder as lmtd.exe for block validation to work.</p>
       </div>
     </div>
   </div>
@@ -771,18 +802,18 @@
   <div class="download-category reveal">
     <div class="category-header">
       <div class="category-icon cat-wallet">&#x1F4B0;</div>
-      <h3>Wallet <small>Manage your LMT funds</small></h3>
+      <h3>Wallet <small data-i18n="downloads.wallet.sub">Manage your LMT funds</small></h3>
     </div>
     <div class="download-grid">
       <div class="download-card cloth-card">
         <h4><span class="tag tag-gui">GUI</span> Wallet GUI</h4>
         <span class="file-name">lmt-wallet-gui.exe</span>
-        <p>Desktop wallet with a dark-themed interface. Create wallets, manage addresses, send transactions. Requires CLI Wallet to function.</p>
+        <p data-i18n="downloads.walletgui.desc">Desktop wallet with a dark-themed interface. Create wallets, manage addresses, send transactions. Requires CLI Wallet to function.</p>
       </div>
       <div class="download-card cloth-card">
         <h4><span class="tag tag-required">Required</span> CLI Wallet</h4>
         <span class="file-name">lmt-cli-wallet.exe</span>
-        <p>Terminal wallet and RPC interface. Also serves as the backend engine for the Wallet GUI. Must be in the same folder as the GUI.</p>
+        <p data-i18n="downloads.cliwallet.desc">Terminal wallet and RPC interface. Also serves as the backend engine for the Wallet GUI. Must be in the same folder as the GUI.</p>
       </div>
     </div>
   </div>
@@ -790,28 +821,28 @@
   <div class="download-category reveal">
     <div class="category-header">
       <div class="category-icon cat-mining">&#x26CF;</div>
-      <h3>Mining <small>Mine LMT with your CPU</small></h3>
+      <h3>Mining <small data-i18n="downloads.mining.sub">Mine LMT with your CPU</small></h3>
     </div>
     <div class="download-grid">
       <div class="download-card cloth-card">
         <h4><span class="tag tag-gui">GUI</span> Miner GUI</h4>
         <span class="file-name">lmt-miner-gui.exe</span>
-        <p>Graphical launcher that manages the Stratum Bridge and XMRig miner. The easiest way to start mining.</p>
+        <p data-i18n="downloads.minergui.desc">Graphical launcher that manages the Stratum Bridge and XMRig miner. The easiest way to start mining.</p>
       </div>
       <div class="download-card cloth-card">
         <h4><span class="tag tag-required">Required</span> Stratum Bridge</h4>
         <span class="file-name">lmt-stratum-bridge.exe</span>
-        <p>Connects the node's RPC to XMRig via the LMT-native Stratum protocol. Required for mining.</p>
+        <p data-i18n="downloads.stratum.desc">Connects the node's RPC to XMRig via the LMT-native Stratum protocol. Required for mining.</p>
       </div>
       <div class="download-card cloth-card">
         <h4><span class="tag tag-required">Required</span> XMRig Miner</h4>
         <span class="file-name">xmrig.exe</span>
-        <p>XMRig fork adapted for LMT RandomX mining. Connects to the Stratum Bridge to receive jobs and submit shares.</p>
+        <p data-i18n="downloads.xmrig.desc">XMRig fork adapted for LMT RandomX mining. Connects to the Stratum Bridge to receive jobs and submit shares.</p>
       </div>
       <div class="download-card cloth-card">
         <h4><span class="tag tag-optional">Config</span> Miner Config</h4>
         <span class="file-name">config.json</span>
-        <p>Default XMRig configuration. Adjust threads, CPU priority, and pool settings to optimize your mining performance.</p>
+        <p data-i18n="downloads.config.desc">Default XMRig configuration. Adjust threads, CPU priority, and pool settings to optimize your mining performance.</p>
       </div>
     </div>
   </div>
@@ -1059,6 +1090,140 @@
 
   var reveals = document.querySelectorAll('.reveal');
   for (var i = 0; i < reveals.length; i++) observer.observe(reveals[i]);
+
+  // =============================================
+  // i18n — AUTO LANGUAGE DETECTION + TOGGLE
+  // =============================================
+  var translations = {
+    en: {
+      'nav.features': 'Features',
+      'nav.quickstart': 'Quick Start',
+      'nav.downloads': 'Downloads',
+      'hero.title': 'The Stone of<br><span class="gradient">Digital Currency</span>',
+      'hero.subtitle': 'Lapis Monetae (LMT) \u2014 a fast, fair, and community-driven cryptocurrency powered by RandomX Proof-of-Work. Mine with your CPU, run a node, join the network.',
+      'hero.download': 'Download',
+      'hero.quickstart': 'Quick Start',
+      'features.title': 'Why Lapis Monetae?',
+      'features.cpu.title': 'CPU-Mineable',
+      'features.cpu.desc': 'RandomX PoW ensures fair mining with any modern CPU. No ASICs, no GPU farms \u2014 just your hardware.',
+      'features.dag.title': 'Fast BlockDAG',
+      'features.dag.desc': 'Built on a DAG-based consensus for high throughput and rapid confirmation times.',
+      'features.fair.title': 'Fair Launch',
+      'features.fair.desc': 'No premine, no ICO. 100M LMT distributed purely through mining over ~8 years.',
+      'features.tooling.title': 'Full Tooling',
+      'features.tooling.desc': 'Desktop wallet GUI, CLI wallet, Stratum bridge, XMRig miner \u2014 everything you need in one place.',
+      'features.open.title': 'Open Source',
+      'features.open.desc': '100% open source under the ISC license. Audit, contribute, and build on top of the LMT network.',
+      'features.community.title': 'Community Driven',
+      'features.community.desc': 'Built by the community, for the community. No corporate backing \u2014 just passionate developers and miners.',
+      'stats.supply': 'Max Supply',
+      'stats.emission': 'Emission Period',
+      'stats.algorithm': 'PoW Algorithm',
+      'stats.mining': 'Mining Friendly',
+      'quickstart.title': 'Quick Start',
+      'downloads.title': 'Downloads',
+      'downloads.subtitle': 'Everything you need in a single release \u2014 Windows x64.',
+      'downloads.banner.title': 'Lapis Monetae v1.0 \u2014 Windows x64',
+      'downloads.banner.desc': 'Node, wallet, miner \u2014 all 8 files in one release. Download, extract to a folder, and you\'re ready.',
+      'downloads.banner.btn': 'Download from GitHub Releases',
+      'downloads.banner.guide': 'Setup Guide',
+      'downloads.node.sub': 'Run the LMT network infrastructure',
+      'downloads.wallet.sub': 'Manage your LMT funds',
+      'downloads.mining.sub': 'Mine LMT with your CPU',
+      'downloads.lmtd.desc': 'The full node. Connects to the LMT P2P network, validates blocks and transactions. Required for everything else to work.',
+      'downloads.randomx.desc': 'Native RandomX PoW library. Must be in the same folder as lmtd.exe for block validation to work.',
+      'downloads.walletgui.desc': 'Desktop wallet with a dark-themed interface. Create wallets, manage addresses, send transactions. Requires CLI Wallet to function.',
+      'downloads.cliwallet.desc': 'Terminal wallet and RPC interface. Also serves as the backend engine for the Wallet GUI. Must be in the same folder as the GUI.',
+      'downloads.minergui.desc': 'Graphical launcher that manages the Stratum Bridge and XMRig miner. The easiest way to start mining.',
+      'downloads.stratum.desc': 'Connects the node\'s RPC to XMRig via the LMT-native Stratum protocol. Required for mining.',
+      'downloads.xmrig.desc': 'XMRig fork adapted for LMT RandomX mining. Connects to the Stratum Bridge to receive jobs and submit shares.',
+      'downloads.config.desc': 'Default XMRig configuration. Adjust threads, CPU priority, and pool settings to optimize your mining performance.'
+    },
+    es: {
+      'nav.features': 'Caracter\u00edsticas',
+      'nav.quickstart': 'Inicio R\u00e1pido',
+      'nav.downloads': 'Descargas',
+      'hero.title': 'La Piedra de la<br><span class="gradient">Moneda Digital</span>',
+      'hero.subtitle': 'Lapis Monetae (LMT) \u2014 una criptomoneda r\u00e1pida, justa y comunitaria impulsada por RandomX Proof-of-Work. Mina con tu CPU, ejecuta un nodo, \u00fanete a la red.',
+      'hero.download': 'Descargar',
+      'hero.quickstart': 'Inicio R\u00e1pido',
+      'features.title': '\u00bfPor qu\u00e9 Lapis Monetae?',
+      'features.cpu.title': 'Minado por CPU',
+      'features.cpu.desc': 'RandomX PoW garantiza un minado justo con cualquier CPU moderna. Sin ASICs, sin granjas GPU \u2014 solo tu hardware.',
+      'features.dag.title': 'BlockDAG R\u00e1pido',
+      'features.dag.desc': 'Construido sobre un consenso basado en DAG para alto rendimiento y tiempos de confirmaci\u00f3n r\u00e1pidos.',
+      'features.fair.title': 'Lanzamiento Justo',
+      'features.fair.desc': 'Sin preminado, sin ICO. 100M LMT distribuidos \u00fanicamente a trav\u00e9s del minado durante ~8 a\u00f1os.',
+      'features.tooling.title': 'Herramientas Completas',
+      'features.tooling.desc': 'Wallet GUI de escritorio, wallet CLI, puente Stratum, minero XMRig \u2014 todo lo que necesitas en un solo lugar.',
+      'features.open.title': 'C\u00f3digo Abierto',
+      'features.open.desc': '100% c\u00f3digo abierto bajo licencia ISC. Audita, contribuye y construye sobre la red LMT.',
+      'features.community.title': 'Impulsado por la Comunidad',
+      'features.community.desc': 'Construido por la comunidad, para la comunidad. Sin respaldo corporativo \u2014 solo desarrolladores y mineros apasionados.',
+      'stats.supply': 'Suministro M\u00e1ximo',
+      'stats.emission': 'Per\u00edodo de Emisi\u00f3n',
+      'stats.algorithm': 'Algoritmo PoW',
+      'stats.mining': 'Amigable para Minar',
+      'quickstart.title': 'Inicio R\u00e1pido',
+      'downloads.title': 'Descargas',
+      'downloads.subtitle': 'Todo lo que necesitas en un solo release \u2014 Windows x64.',
+      'downloads.banner.title': 'Lapis Monetae v1.0 \u2014 Windows x64',
+      'downloads.banner.desc': 'Nodo, wallet, minero \u2014 los 8 archivos en un solo release. Descarga, extrae en una carpeta y listo.',
+      'downloads.banner.btn': 'Descargar desde GitHub Releases',
+      'downloads.banner.guide': 'Gu\u00eda de Instalaci\u00f3n',
+      'downloads.node.sub': 'Ejecuta la infraestructura de red LMT',
+      'downloads.wallet.sub': 'Administra tus fondos LMT',
+      'downloads.mining.sub': 'Mina LMT con tu CPU',
+      'downloads.lmtd.desc': 'El nodo completo. Se conecta a la red P2P de LMT, valida bloques y transacciones. Necesario para que todo lo dem\u00e1s funcione.',
+      'downloads.randomx.desc': 'Librer\u00eda nativa de RandomX PoW. Debe estar en la misma carpeta que lmtd.exe para que la validaci\u00f3n de bloques funcione.',
+      'downloads.walletgui.desc': 'Wallet de escritorio con interfaz oscura. Crea wallets, administra direcciones, env\u00eda transacciones. Requiere CLI Wallet para funcionar.',
+      'downloads.cliwallet.desc': 'Wallet de terminal e interfaz RPC. Tambi\u00e9n sirve como motor backend para la Wallet GUI. Debe estar en la misma carpeta que la GUI.',
+      'downloads.minergui.desc': 'Lanzador gr\u00e1fico que administra el Stratum Bridge y el minero XMRig. La forma m\u00e1s f\u00e1cil de empezar a minar.',
+      'downloads.stratum.desc': 'Conecta el RPC del nodo a XMRig mediante el protocolo Stratum nativo de LMT. Necesario para minar.',
+      'downloads.xmrig.desc': 'Fork de XMRig adaptado para minado RandomX de LMT. Se conecta al Stratum Bridge para recibir trabajos y enviar shares.',
+      'downloads.config.desc': 'Configuraci\u00f3n predeterminada de XMRig. Ajusta hilos, prioridad de CPU y configuraci\u00f3n del pool para optimizar tu rendimiento de minado.'
+    }
+  };
+
+  var currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.getElementById('lang-label').textContent = lang.toUpperCase();
+    var els = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < els.length; i++) {
+      var key = els[i].getAttribute('data-i18n');
+      var val = translations[lang][key];
+      if (val) {
+        if (els[i].getAttribute('data-i18n-html') === 'true') {
+          els[i].innerHTML = val;
+        } else {
+          els[i].textContent = val;
+        }
+      }
+    }
+    try { localStorage.setItem('lmt-lang', lang); } catch(e) {}
+  }
+
+  // Auto-detect: check saved preference, then browser language
+  (function() {
+    var saved = null;
+    try { saved = localStorage.getItem('lmt-lang'); } catch(e) {}
+    if (saved && translations[saved]) {
+      setLang(saved);
+    } else {
+      var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      if (browserLang.indexOf('es') === 0) {
+        setLang('es');
+      }
+    }
+  })();
+
+  // Toggle button
+  document.getElementById('lang-toggle').addEventListener('click', function() {
+    setLang(currentLang === 'en' ? 'es' : 'en');
+  });
 </script>
 
 </body>
