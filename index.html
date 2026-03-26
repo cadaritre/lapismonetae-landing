@@ -97,6 +97,8 @@
       font-weight: 500;
       font-size: 0.9rem;
       letter-spacing: 0.03em;
+      position: relative;
+      z-index: 10;
       transition: color 0.25s, border-color 0.25s;
       padding-bottom: 0.25rem;
       border-bottom: 1.5px solid transparent;
@@ -127,8 +129,6 @@
     }
 
     .wave-section {
-      transform-style: preserve-3d;
-      will-change: transform;
       transition: transform 0.25s cubic-bezier(.22,.61,.36,1);
     }
 
@@ -201,6 +201,7 @@
       will-change: transform;
     }
 
+    .btn { position: relative; z-index: 10; }
     .btn:hover { transform: translateY(-2px); }
 
     .btn-primary {
@@ -255,8 +256,6 @@
       padding: 2rem;
       backdrop-filter: blur(12px);
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      will-change: transform;
-      transform-style: preserve-3d;
     }
 
     .feature-card:hover { border-color: var(--blue-light); }
@@ -375,8 +374,6 @@
       flex-direction: column;
       gap: 0.75rem;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      will-change: transform;
-      transform-style: preserve-3d;
     }
 
     .download-card:hover { border-color: var(--gold); }
@@ -434,8 +431,6 @@
       margin-bottom: 3rem;
       flex-wrap: wrap;
       transition: transform 0.3s, box-shadow 0.3s;
-      will-change: transform;
-      transform-style: preserve-3d;
     }
 
     .instructions-banner .banner-text { display: flex; align-items: center; gap: 0.75rem; }
@@ -463,8 +458,6 @@
       overflow-x: auto;
       position: relative;
       transition: transform 0.3s, box-shadow 0.3s;
-      will-change: transform;
-      transform-style: preserve-3d;
     }
 
     .code-block .prompt { color: #d4a017; }
@@ -1033,9 +1026,7 @@
         s.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
       }
     }
-    requestAnimationFrame(updateWaveSections);
   }
-  updateWaveSections();
 
   // CLOTH CARDS — Cards tilt toward cursor like fabric
   var clothCards = document.querySelectorAll('.cloth-card');
@@ -1063,9 +1054,13 @@
         card.style.boxShadow = '';
       }
     }
-    requestAnimationFrame(updateClothCards);
   }
-  updateClothCards();
+
+  // Update card/section effects only on mousemove, not every frame
+  document.addEventListener('mousemove', function() {
+    updateWaveSections();
+    updateClothCards();
+  });
 
   // CLICK RIPPLE
   document.addEventListener('click', function(e) {
