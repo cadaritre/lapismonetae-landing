@@ -12,16 +12,16 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg-deep: #0c1425;
-      --bg-card: rgba(18, 32, 60, 0.6);
+      --bg-deep: #f5f7fb;
+      --bg-card: rgba(255, 255, 255, 0.7);
       --blue-primary: #2563eb;
-      --blue-light: #60a5fa;
-      --blue-glow: rgba(37, 99, 235, 0.2);
-      --gold: #c9952a;
-      --gold-light: #e8be5a;
-      --text: #e8ecf4;
-      --text-dim: #7b8fad;
-      --border: rgba(50, 90, 160, 0.18);
+      --blue-light: #3b82f6;
+      --blue-glow: rgba(37, 99, 235, 0.12);
+      --gold: #b8860b;
+      --gold-light: #d4a017;
+      --text: #1a202c;
+      --text-dim: #64748b;
+      --border: rgba(100, 116, 139, 0.15);
     }
 
     html { scroll-behavior: smooth; }
@@ -60,7 +60,7 @@
       align-items: center;
       justify-content: space-between;
       backdrop-filter: blur(18px);
-      background: rgba(10, 18, 34, 0.75);
+      background: rgba(245, 247, 251, 0.85);
       border-bottom: 1px solid var(--border);
       transition: background 0.3s, transform 0.3s;
     }
@@ -73,7 +73,7 @@
 
     nav .logo-group img {
       height: 36px;
-      filter: drop-shadow(0 0 8px var(--blue-glow));
+      filter: drop-shadow(0 2px 6px rgba(37,99,235,0.15));
     }
 
     nav .logo-group span {
@@ -146,7 +146,7 @@
     .hero-logo {
       width: 180px;
       animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 40px var(--blue-glow));
+      filter: drop-shadow(0 4px 20px rgba(37,99,235,0.12));
       transition: transform 0.3s ease;
     }
 
@@ -213,7 +213,7 @@
 
     .btn-gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: #0a0e18;
+      color: #fff;
       box-shadow: 0 4px 24px rgba(212, 162, 26, 0.25);
     }
 
@@ -392,8 +392,8 @@
     .download-card .file-name {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
-      color: var(--blue-light);
-      background: rgba(26, 109, 212, 0.08);
+      color: var(--blue-primary);
+      background: rgba(37, 99, 235, 0.08);
       padding: 0.2rem 0.5rem;
       border-radius: 5px;
       display: inline-block;
@@ -413,10 +413,10 @@
       flex-shrink: 0;
     }
 
-    .tag-gui { background: rgba(212, 162, 26, 0.15); color: var(--gold-light); }
-    .tag-cli { background: rgba(26, 109, 212, 0.15); color: var(--blue-light); }
-    .tag-required { background: rgba(255, 120, 80, 0.15); color: #ff9870; }
-    .tag-optional { background: rgba(130, 160, 200, 0.1); color: var(--text-dim); }
+    .tag-gui { background: rgba(184, 134, 11, 0.1); color: #92600a; }
+    .tag-cli { background: rgba(37, 99, 235, 0.1); color: var(--blue-primary); }
+    .tag-required { background: rgba(220, 80, 50, 0.1); color: #c53030; }
+    .tag-optional { background: rgba(100, 116, 139, 0.08); color: var(--text-dim); }
 
     .download-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .download-actions .btn { font-size: 0.78rem; padding: 0.45rem 0.9rem; }
@@ -453,13 +453,13 @@
     }
 
     .code-block {
-      background: rgba(10, 18, 34, 0.85);
+      background: rgba(30, 41, 59, 0.92);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 1.5rem 2rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
-      color: var(--text-dim);
+      color: #94a3b8;
       overflow-x: auto;
       position: relative;
       transition: transform 0.3s, box-shadow 0.3s;
@@ -467,9 +467,9 @@
       transform-style: preserve-3d;
     }
 
-    .code-block .prompt { color: var(--gold); }
-    .code-block .cmd { color: var(--text); }
-    .code-block .comment { color: #4a5a74; }
+    .code-block .prompt { color: #d4a017; }
+    .code-block .cmd { color: #e2e8f0; }
+    .code-block .comment { color: #6b7f99; }
 
     footer {
       position: relative;
@@ -541,13 +541,13 @@
     .glow-blue {
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.10), transparent 70%);
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.06), transparent 70%);
     }
 
     .glow-gold {
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(201, 149, 42, 0.06), transparent 70%);
+      background: radial-gradient(circle, rgba(201, 149, 42, 0.04), transparent 70%);
     }
 
     .cursor-glow {
@@ -555,7 +555,7 @@
       width: 300px;
       height: 300px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.04), transparent 70%);
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.03), transparent 70%);
       pointer-events: none;
       z-index: 0;
       transform: translate(-50%, -50%);
@@ -572,7 +572,7 @@
       width: 0;
       height: 0;
       border-radius: 50%;
-      border: 1px solid rgba(96, 165, 250, 0.2);
+      border: 1px solid rgba(37, 99, 235, 0.15);
       transform: translate(-50%, -50%);
       animation: rippleExpand 0.6s ease-out forwards;
     }
@@ -601,7 +601,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      background: rgba(50, 90, 160, 0.12);
+      background: rgba(37, 99, 235, 0.08);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.35rem 0.6rem;
@@ -933,9 +933,9 @@
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
         ctx.strokeStyle = row % 5 === 0
-          ? 'rgba(201,149,42,' + alpha + ')'
-          : 'rgba(96,165,250,' + alpha + ')';
-        ctx.lineWidth = 0.6;
+          ? 'rgba(184,134,11,' + alpha + ')'
+          : 'rgba(37,99,235,' + alpha + ')';
+        ctx.lineWidth = 0.5;
         ctx.stroke();
       }
     }
@@ -949,9 +949,9 @@
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
         ctx.strokeStyle = col % 6 === 0
-          ? 'rgba(201,149,42,' + alpha + ')'
-          : 'rgba(96,165,250,' + alpha + ')';
-        ctx.lineWidth = 0.4;
+          ? 'rgba(184,134,11,' + alpha + ')'
+          : 'rgba(37,99,235,' + alpha + ')';
+        ctx.lineWidth = 0.35;
         ctx.stroke();
       }
     }
@@ -961,7 +961,7 @@
       if (d > 2) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, Math.min(d * 0.12, 1.5), 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(96,165,250,' + Math.min(d * 0.015, 0.25) + ')';
+        ctx.fillStyle = 'rgba(37,99,235,' + Math.min(d * 0.012, 0.18) + ')';
         ctx.fill();
       }
     }
