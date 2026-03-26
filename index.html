@@ -32,7 +32,6 @@
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.6;
-      perspective: 1200px;
     }
 
     #cloth-canvas {
@@ -45,9 +44,6 @@
     .sheet {
       position: relative;
       z-index: 1;
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.15s cubic-bezier(.22,.61,.36,1);
     }
 
     nav {
@@ -258,7 +254,11 @@
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
-    .feature-card:hover { border-color: var(--blue-light); }
+    .feature-card:hover {
+      border-color: var(--blue-light);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(37,99,235,0.08);
+    }
 
     .feature-icon {
       width: 48px;
@@ -376,7 +376,11 @@
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
-    .download-card:hover { border-color: var(--gold); }
+    .download-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(184,134,11,0.08);
+    }
 
     .download-card h4 {
       font-size: 1rem;
@@ -584,8 +588,6 @@
       nav .nav-links { display: none; }
       .stats-row { gap: 2rem; }
       .hero-logo { width: 130px; }
-      body { perspective: none; }
-      .sheet { transform: none !important; }
       .features-grid { grid-template-columns: 1fr; }
       .footer-links { gap: 1rem; }
     }
@@ -985,82 +987,7 @@
 
   window.addEventListener('scroll', function() { sY = window.scrollY; });
 
-  // FLOATING SHEET — Entire page tilts like a curtain
-  var sheet = document.getElementById('sheet');
-  var stx = 0, sty = 0, scx = 0, scy = 0;
-
-  document.addEventListener('mousemove', function(e) {
-    var cx = window.innerWidth / 2;
-    var cy = window.innerHeight / 2;
-    stx = ((e.clientY - cy) / cy) * -0.3;
-    sty = ((e.clientX - cx) / cx) * 0.3;
-  });
-
-  function updateSheet() {
-    scx += (stx - scx) * 0.04;
-    scy += (sty - scy) * 0.04;
-    sheet.style.transform = 'rotateX(' + scx + 'deg) rotateY(' + scy + 'deg)';
-    requestAnimationFrame(updateSheet);
-  }
-  updateSheet();
-
-  // WAVE SECTIONS — Each section undulates near cursor
-  var waveSections = document.querySelectorAll('.wave-section');
-
-  function updateWaveSections() {
-    for (var i = 0; i < waveSections.length; i++) {
-      var s = waveSections[i];
-      var rect = s.getBoundingClientRect();
-      var cx = rect.left + rect.width / 2;
-      var cy = rect.top + rect.height / 2;
-      var dx = mouseX - cx;
-      var dy = mouseY - cy;
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      var maxD = 600;
-      if (dist < maxD) {
-        var f = (1 - dist / maxD) * 0.15;
-        var rx = (dy / maxD) * -0.8 * f;
-        var ry = (dx / maxD) * 0.8 * f;
-        s.style.transform = 'perspective(800px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-      } else {
-        s.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
-      }
-    }
-  }
-
-  // CLOTH CARDS — Cards tilt toward cursor like fabric
-  var clothCards = document.querySelectorAll('.cloth-card');
-
-  function updateClothCards() {
-    for (var i = 0; i < clothCards.length; i++) {
-      var card = clothCards[i];
-      var rect = card.getBoundingClientRect();
-      var cx = rect.left + rect.width / 2;
-      var cy = rect.top + rect.height / 2;
-      var dx = mouseX - cx;
-      var dy = mouseY - cy;
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      var radius = 300;
-      if (dist < radius) {
-        var f = (1 - dist / radius);
-        var e = f * f;
-        var ry = (dx / radius) * 4 * e;
-        var rx = (dy / radius) * -4 * e;
-        var glow = e * 0.06;
-        card.style.transform = 'perspective(600px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-        card.style.boxShadow = '0 ' + (4 + e * 8) + 'px ' + (20 + e * 12) + 'px rgba(37,99,235,' + (0.05 + glow) + ')';
-      } else {
-        card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
-        card.style.boxShadow = '';
-      }
-    }
-  }
-
-  // Update card/section effects only on mousemove, not every frame
-  document.addEventListener('mousemove', function() {
-    updateWaveSections();
-    updateClothCards();
-  });
+  // Sheet, wave-section and cloth-card JS transforms removed — they broke click targets
 
   // CLICK RIPPLE
   document.addEventListener('click', function(e) {
