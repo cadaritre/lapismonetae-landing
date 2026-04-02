@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lapis Monetae — Whitepaper</title>
+  <style>
+    :root {
+      --bg-deep: #f5f7fb;
+      --bg-card: #ffffff;
+      --blue-primary: #2563eb;
+      --blue-dark: #1e40af;
+      --gold: #b8860b;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font); background: var(--bg-deep); color: var(--text); line-height: 1.7; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); z-index: 100; border-bottom: 1px solid var(--border); padding: 12px 0; }
+    .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-size: 18px; font-weight: 700; color: var(--blue-primary); text-decoration: none; }
+    .nav-links { display: flex; gap: 16px; align-items: center; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--blue-primary); }
+    .lang-btn { background: var(--bg-deep); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+
+    /* Content */
+    .container { max-width: 800px; margin: 0 auto; padding: 80px 24px 60px; }
+
+    /* Header */
+    .wp-header { text-align: center; padding: 48px 0 32px; }
+    .wp-header img { width: 80px; height: 80px; margin-bottom: 16px; }
+    .wp-header h1 { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--blue-primary), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .wp-header .version { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+
+    /* Sections */
+    .section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; }
+    .section h2 { font-size: 20px; font-weight: 700; color: var(--blue-primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--bg-deep); }
+    .section h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 16px 0 8px; }
+    .section p { margin-bottom: 12px; color: var(--text); font-size: 15px; }
+    .section ul { margin: 8px 0 12px 20px; }
+    .section li { margin-bottom: 6px; font-size: 15px; }
+
+    /* Table */
+    .spec-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .spec-table th { text-align: left; padding: 10px 12px; background: var(--bg-deep); font-size: 13px; font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+    .spec-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .spec-table tr:last-child td { border-bottom: none; }
+
+    /* Highlight box */
+    .highlight { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+    .highlight p { color: var(--blue-dark); margin: 0; font-size: 14px; }
+
+    /* TOC */
+    .toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 28px; margin-bottom: 20px; }
+    .toc h3 { font-size: 15px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; }
+    .toc ol { margin: 0; padding-left: 20px; }
+    .toc li { margin-bottom: 4px; }
+    .toc a { color: var(--blue-primary); text-decoration: none; font-size: 14px; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* Footer */
+    footer { text-align: center; padding: 32px 24px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
+    footer a { color: var(--blue-primary); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .container { padding: 70px 16px 40px; }
+      .section { padding: 20px; }
+      .wp-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Lapis Monetae</a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="https://github.com/cadaritre/Lapis-monetae" target="_blank">GitHub</a>
+      <button class="lang-btn" onclick="toggleLang()" id="lang-toggle">ES</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="wp-header">
+    <img src="assets/lmt_logo.png" alt="LMT">
+    <h1 data-i18n="wp.title">Lapis Monetae (LMT) Whitepaper</h1>
+    <div class="version" data-i18n="wp.version">Version 1.0 — April 2026</div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3 data-i18n="wp.toc">Table of Contents</h3>
+    <ol>
+      <li><a href="#abstract" data-i18n="wp.toc1">Abstract</a></li>
+      <li><a href="#motivation" data-i18n="wp.toc2">Motivation</a></li>
+      <li><a href="#consensus" data-i18n="wp.toc3">Consensus</a></li>
+      <li><a href="#pow" data-i18n="wp.toc4">Proof of Work</a></li>
+      <li><a href="#emission" data-i18n="wp.toc5">Emission Schedule</a></li>
+      <li><a href="#network" data-i18n="wp.toc6">Network Architecture</a></li>
+      <li><a href="#wallet" data-i18n="wp.toc7">Wallet and Addresses</a></li>
+      <li><a href="#mining" data-i18n="wp.toc8">Mining Infrastructure</a></li>
+      <li><a href="#security" data-i18n="wp.toc9">Security</a></li>
+      <li><a href="#roadmap" data-i18n="wp.toc10">Roadmap</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Abstract -->
+  <div class="section" id="abstract">
+    <h2>1. <span data-i18n="wp.s1.title">Abstract</span></h2>
+    <p data-i18n="wp.s1.p1">Lapis Monetae (LMT) is an independent cryptocurrency built on a high-performance BlockDAG consensus engine. Derived from the Kaspa Rust codebase, LMT replaces the original kHeavyHash Proof-of-Work algorithm with RandomX, enabling fair CPU-based mining accessible to anyone with a standard computer. The network starts from its own genesis block with no connection to any prior blockchain.</p>
+    <p data-i18n="wp.s1.p2">LMT targets a total supply of 100,000,000 coins distributed over approximately 8 years through a smooth deflationary emission curve. The network launches at 1 block per second (BPS) and scales to 10 BPS via the Crescendo hardfork after approximately 6 months of operation.</p>
+  </div>
+
+  <!-- 2. Motivation -->
+  <div class="section" id="motivation">
+    <h2>2. <span data-i18n="wp.s2.title">Motivation</span></h2>
+    <p data-i18n="wp.s2.p1">The cryptocurrency landscape is dominated by networks that favor specialized hardware (ASICs) or large GPU farms, concentrating mining power in the hands of well-funded operations. This undermines the decentralization that cryptocurrencies were designed to provide.</p>
+    <p data-i18n="wp.s2.p2">Lapis Monetae addresses this by using RandomX, a Proof-of-Work algorithm specifically designed to be efficient on general-purpose CPUs and resistant to ASIC and GPU optimization. Combined with the high-throughput BlockDAG consensus from the Kaspa research lineage, LMT offers fast confirmations, high transaction capacity, and genuinely decentralized mining.</p>
+    <p data-i18n="wp.s2.p3">LMT is a fair launch project with no premine, no ICO, no developer tax, and no venture capital backing. Every coin is earned through mining.</p>
+  </div>
+
+  <!-- 3. Consensus -->
+  <div class="section" id="consensus">
+    <h2>3. <span data-i18n="wp.s3.title">Consensus: BlockDAG with GHOSTDAG</span></h2>
+    <p data-i18n="wp.s3.p1">Unlike traditional blockchains where blocks form a single chain, LMT uses a Directed Acyclic Graph (DAG) structure where multiple blocks can be created simultaneously. The GHOSTDAG protocol determines block ordering and resolves conflicts without discarding parallel blocks, dramatically increasing throughput.</p>
+    <p data-i18n="wp.s3.p2">Key consensus parameters:</p>
+    <table class="spec-table">
+      <tr><th data-i18n="wp.s3.param">Parameter</th><th data-i18n="wp.s3.value">Value</th></tr>
+      <tr><td data-i18n="wp.s3.r1c1">Block time (pre-Crescendo)</td><td>1,000 ms (1 BPS)</td></tr>
+      <tr><td data-i18n="wp.s3.r2c1">Block time (post-Crescendo)</td><td>100 ms (10 BPS)</td></tr>
+      <tr><td data-i18n="wp.s3.r3c1">Crescendo activation (mainnet)</td><td>DAA score 15,000,000 (~6 months)</td></tr>
+      <tr><td data-i18n="wp.s3.r4c1">GHOSTDAG K (pre-Crescendo)</td><td>18</td></tr>
+      <tr><td data-i18n="wp.s3.r5c1">Finality depth</td><td>86,400 blocks (~24 hours at 1 BPS)</td></tr>
+    </table>
+  </div>
+
+  <!-- 4. Proof of Work -->
+  <div class="section" id="pow">
+    <h2>4. <span data-i18n="wp.s4.title">Proof of Work: RandomX</span></h2>
+    <p data-i18n="wp.s4.p1">LMT uses RandomX as its sole Proof-of-Work algorithm. RandomX was designed by the Monero research team to be optimally efficient on general-purpose CPUs while being resistant to ASICs, GPUs, and FPGAs.</p>
+    <p data-i18n="wp.s4.p2">The PoW pipeline in LMT works as follows:</p>
+    <div class="highlight">
+      <p>pre_pow_hash(header) → cSHAKE256 → RandomX VM → kHeavyHash(matrix) → compare with target</p>
+    </div>
+    <p data-i18n="wp.s4.p3">The RandomX VM executes random programs that are generated from the block header hash. These programs heavily utilize CPU features such as floating-point operations, branch prediction, cache hierarchy, and memory-hard operations, making the algorithm naturally suited for CPUs.</p>
+    <p data-i18n="wp.s4.p4">The RandomX dataset (~2 GB) is regenerated every epoch and cached in RAM, ensuring that memory access patterns cannot be optimized by specialized hardware.</p>
+  </div>
+
+  <!-- 5. Emission -->
+  <div class="section" id="emission">
+    <h2>5. <span data-i18n="wp.s5.title">Emission Schedule</span></h2>
+    <p data-i18n="wp.s5.p1">LMT has a fixed maximum supply of 100,000,000 coins (100 million LMT). The smallest unit is 1 sompi = 0.00000001 LMT (10^-8).</p>
+    <table class="spec-table">
+      <tr><th data-i18n="wp.s5.phase">Phase</th><th data-i18n="wp.s5.duration">Duration</th><th data-i18n="wp.s5.reward">Block Reward</th></tr>
+      <tr><td data-i18n="wp.s5.r1c1">Pre-deflationary</td><td data-i18n="wp.s5.r1c2">~6 months (DAA 0 to 15,778,800)</td><td>500 LMT</td></tr>
+      <tr><td data-i18n="wp.s5.r2c1">Deflationary</td><td data-i18n="wp.s5.r2c2">~7.5 years (426 months)</td><td data-i18n="wp.s5.r2c3">Decreasing monthly</td></tr>
+    </table>
+    <p data-i18n="wp.s5.p2">After the pre-deflationary period, the block reward decreases smoothly each month following a calculated subsidy table. The emission curve is designed to distribute approximately 50% of all coins in the first 2 years, incentivizing early adoption while maintaining long-term mining rewards.</p>
+  </div>
+
+  <!-- 6. Network -->
+  <div class="section" id="network">
+    <h2>6. <span data-i18n="wp.s6.title">Network Architecture</span></h2>
+    <p data-i18n="wp.s6.p1">LMT operates a fully independent peer-to-peer network. Nodes communicate via a custom protocol (version 7) over TCP. The network is designed to reject connections from incompatible networks.</p>
+    <table class="spec-table">
+      <tr><th data-i18n="wp.s6.net">Network</th><th>P2P Port</th><th>gRPC Port</th></tr>
+      <tr><td>Mainnet</td><td>26111</td><td>26110</td></tr>
+      <tr><td>Testnet-10</td><td>26211</td><td>26210</td></tr>
+      <tr><td>Testnet-11</td><td>26311</td><td>26210</td></tr>
+      <tr><td>Simnet</td><td>26511</td><td>26510</td></tr>
+      <tr><td>Devnet</td><td>26611</td><td>26610</td></tr>
+    </table>
+    <p data-i18n="wp.s6.p2">The node software (lmtd) is written in Rust for memory safety and high performance. It includes a full consensus engine, P2P networking stack, gRPC and wRPC RPC servers, UTXO indexer, and mining manager.</p>
+  </div>
+
+  <!-- 7. Wallet -->
+  <div class="section" id="wallet">
+    <h2>7. <span data-i18n="wp.s7.title">Wallet and Addresses</span></h2>
+    <p data-i18n="wp.s7.p1">LMT uses BIP-32 hierarchical deterministic wallets with BIP-39 mnemonic seed phrases (12 or 24 words). Wallets are encrypted with XChaCha20-Poly1305 using a password-derived key (Argon2id).</p>
+    <p data-i18n="wp.s7.p2">Addresses use CashAddr-style Bech32 encoding with network-specific prefixes:</p>
+    <table class="spec-table">
+      <tr><th data-i18n="wp.s7.net">Network</th><th data-i18n="wp.s7.prefix">Prefix</th><th data-i18n="wp.s7.example">Example</th></tr>
+      <tr><td>Mainnet</td><td>lmt:</td><td>lmt:qz0s...t8cv</td></tr>
+      <tr><td>Testnet</td><td>lmttest:</td><td>lmttest:qz0s...t8cv</td></tr>
+      <tr><td>Simnet</td><td>lmtsim:</td><td>lmtsim:qz0s...t8cv</td></tr>
+      <tr><td>Devnet</td><td>lmtdev:</td><td>lmtdev:qz0s...t8cv</td></tr>
+    </table>
+    <p data-i18n="wp.s7.p3">Account types supported: BIP-32 standard, multisig (m-of-n), watch-only, and legacy import.</p>
+  </div>
+
+  <!-- 8. Mining -->
+  <div class="section" id="mining">
+    <h2>8. <span data-i18n="wp.s8.title">Mining Infrastructure</span></h2>
+    <p data-i18n="wp.s8.p1">LMT includes a complete mining stack out of the box:</p>
+    <ul>
+      <li data-i18n="wp.s8.l1"><strong>lmtd</strong> — Full node with get_block_template and submit_block RPC methods</li>
+      <li data-i18n="wp.s8.l2"><strong>lmt-stratum-bridge</strong> — TCP Stratum proxy that translates between XMRig and the node's gRPC interface</li>
+      <li data-i18n="wp.s8.l3"><strong>XMRig fork</strong> — Modified XMRig that understands LMT-native job format (48-byte RandomX input)</li>
+      <li data-i18n="wp.s8.l4"><strong>Miner GUI</strong> — Desktop application for managing bridge and miner processes with real-time metrics</li>
+    </ul>
+    <p data-i18n="wp.s8.p2">The LMT Stratum protocol uses standard JSON-RPC framing with mining.subscribe, mining.authorize, mining.notify, and mining.submit methods. The bridge includes rate limiting, stale job detection, automatic retry with exponential backoff, and structured logging.</p>
+  </div>
+
+  <!-- 9. Security -->
+  <div class="section" id="security">
+    <h2>9. <span data-i18n="wp.s9.title">Security</span></h2>
+    <p data-i18n="wp.s9.p1">LMT inherits the proven security model of the GHOSTDAG consensus protocol and strengthens it with:</p>
+    <ul>
+      <li data-i18n="wp.s9.l1">RandomX Proof-of-Work provides ASIC resistance, ensuring no single entity can dominate mining</li>
+      <li data-i18n="wp.s9.l2">The GHOSTDAG ordering protocol is proven secure under the honest-majority assumption</li>
+      <li data-i18n="wp.s9.l3">Pruning proof validation ensures new nodes can securely sync from any state</li>
+      <li data-i18n="wp.s9.l4">Transaction scripts use a stack-based virtual machine with BIP-62 compliant encoding</li>
+      <li data-i18n="wp.s9.l5">Wallet encryption uses XChaCha20-Poly1305 with Argon2id key derivation (memory-hard)</li>
+    </ul>
+  </div>
+
+  <!-- 10. Roadmap -->
+  <div class="section" id="roadmap">
+    <h2>10. <span data-i18n="wp.s10.title">Roadmap</span></h2>
+    <table class="spec-table">
+      <tr><th data-i18n="wp.s10.phase">Phase</th><th data-i18n="wp.s10.target">Target</th><th data-i18n="wp.s10.desc">Description</th></tr>
+      <tr><td data-i18n="wp.s10.r1c1">Genesis</td><td>Q2 2026</td><td data-i18n="wp.s10.r1c3">Network launch, initial mining, community building</td></tr>
+      <tr><td data-i18n="wp.s10.r2c1">Growth</td><td>Q3 2026</td><td data-i18n="wp.s10.r2c3">Exchange listings, mining pools, third-party wallets</td></tr>
+      <tr><td data-i18n="wp.s10.r3c1">Crescendo</td><td>Q4 2026</td><td data-i18n="wp.s10.r3c3">Automatic upgrade from 1 BPS to 10 BPS at DAA 15,000,000</td></tr>
+      <tr><td data-i18n="wp.s10.r4c1">Ecosystem</td><td>2027+</td><td data-i18n="wp.s10.r4c3">Smart contracts research, mobile wallet, DEX integration</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Lapis Monetae &mdash; ISC License | <a href="https://github.com/cadaritre/Lapis-monetae">GitHub</a> | <a href="https://lapismonetae.com">lapismonetae.com</a></p>
+  <p style="margin-top:6px" data-i18n="wp.footer">Built upon Rusty Kaspa (ISC), RandomX by tevador (BSD-3), and XMRig (GPL-3.0).</p>
+</footer>
+
+<script>
+const translations = {
+  en: {
+    'nav.home': 'Home',
+    'wp.title': 'Lapis Monetae (LMT) Whitepaper',
+    'wp.version': 'Version 1.0 \u2014 April 2026',
+    'wp.toc': 'Table of Contents',
+    'wp.toc1': 'Abstract', 'wp.toc2': 'Motivation', 'wp.toc3': 'Consensus', 'wp.toc4': 'Proof of Work',
+    'wp.toc5': 'Emission Schedule', 'wp.toc6': 'Network Architecture', 'wp.toc7': 'Wallet and Addresses',
+    'wp.toc8': 'Mining Infrastructure', 'wp.toc9': 'Security', 'wp.toc10': 'Roadmap',
+    'wp.s1.title': 'Abstract',
+    'wp.s1.p1': 'Lapis Monetae (LMT) is an independent cryptocurrency built on a high-performance BlockDAG consensus engine. Derived from the Kaspa Rust codebase, LMT replaces the original kHeavyHash Proof-of-Work algorithm with RandomX, enabling fair CPU-based mining accessible to anyone with a standard computer. The network starts from its own genesis block with no connection to any prior blockchain.',
+    'wp.s1.p2': 'LMT targets a total supply of 100,000,000 coins distributed over approximately 8 years through a smooth deflationary emission curve. The network launches at 1 block per second (BPS) and scales to 10 BPS via the Crescendo hardfork after approximately 6 months of operation.',
+    'wp.s2.title': 'Motivation',
+    'wp.s2.p1': 'The cryptocurrency landscape is dominated by networks that favor specialized hardware (ASICs) or large GPU farms, concentrating mining power in the hands of well-funded operations. This undermines the decentralization that cryptocurrencies were designed to provide.',
+    'wp.s2.p2': 'Lapis Monetae addresses this by using RandomX, a Proof-of-Work algorithm specifically designed to be efficient on general-purpose CPUs and resistant to ASIC and GPU optimization. Combined with the high-throughput BlockDAG consensus from the Kaspa research lineage, LMT offers fast confirmations, high transaction capacity, and genuinely decentralized mining.',
+    'wp.s2.p3': 'LMT is a fair launch project with no premine, no ICO, no developer tax, and no venture capital backing. Every coin is earned through mining.',
+    'wp.s3.title': 'Consensus: BlockDAG with GHOSTDAG',
+    'wp.s3.p1': 'Unlike traditional blockchains where blocks form a single chain, LMT uses a Directed Acyclic Graph (DAG) structure where multiple blocks can be created simultaneously. The GHOSTDAG protocol determines block ordering and resolves conflicts without discarding parallel blocks, dramatically increasing throughput.',
+    'wp.s3.p2': 'Key consensus parameters:',
+    'wp.s3.param': 'Parameter', 'wp.s3.value': 'Value',
+    'wp.s3.r1c1': 'Block time (pre-Crescendo)', 'wp.s3.r2c1': 'Block time (post-Crescendo)',
+    'wp.s3.r3c1': 'Crescendo activation (mainnet)', 'wp.s3.r4c1': 'GHOSTDAG K (pre-Crescendo)', 'wp.s3.r5c1': 'Finality depth',
+    'wp.s4.title': 'Proof of Work: RandomX',
+    'wp.s4.p1': 'LMT uses RandomX as its sole Proof-of-Work algorithm. RandomX was designed by the Monero research team to be optimally efficient on general-purpose CPUs while being resistant to ASICs, GPUs, and FPGAs.',
+    'wp.s4.p2': 'The PoW pipeline in LMT works as follows:',
+    'wp.s4.p3': 'The RandomX VM executes random programs that are generated from the block header hash. These programs heavily utilize CPU features such as floating-point operations, branch prediction, cache hierarchy, and memory-hard operations, making the algorithm naturally suited for CPUs.',
+    'wp.s4.p4': 'The RandomX dataset (~2 GB) is regenerated every epoch and cached in RAM, ensuring that memory access patterns cannot be optimized by specialized hardware.',
+    'wp.s5.title': 'Emission Schedule',
+    'wp.s5.p1': 'LMT has a fixed maximum supply of 100,000,000 coins (100 million LMT). The smallest unit is 1 sompi = 0.00000001 LMT (10^-8).',
+    'wp.s5.phase': 'Phase', 'wp.s5.duration': 'Duration', 'wp.s5.reward': 'Block Reward',
+    'wp.s5.r1c1': 'Pre-deflationary', 'wp.s5.r1c2': '~6 months (DAA 0 to 15,778,800)', 'wp.s5.r2c1': 'Deflationary', 'wp.s5.r2c2': '~7.5 years (426 months)', 'wp.s5.r2c3': 'Decreasing monthly',
+    'wp.s5.p2': 'After the pre-deflationary period, the block reward decreases smoothly each month following a calculated subsidy table. The emission curve is designed to distribute approximately 50% of all coins in the first 2 years, incentivizing early adoption while maintaining long-term mining rewards.',
+    'wp.s6.title': 'Network Architecture',
+    'wp.s6.p1': 'LMT operates a fully independent peer-to-peer network. Nodes communicate via a custom protocol (version 7) over TCP. The network is designed to reject connections from incompatible networks.',
+    'wp.s6.net': 'Network',
+    'wp.s6.p2': 'The node software (lmtd) is written in Rust for memory safety and high performance. It includes a full consensus engine, P2P networking stack, gRPC and wRPC RPC servers, UTXO indexer, and mining manager.',
+    'wp.s7.title': 'Wallet and Addresses',
+    'wp.s7.p1': 'LMT uses BIP-32 hierarchical deterministic wallets with BIP-39 mnemonic seed phrases (12 or 24 words). Wallets are encrypted with XChaCha20-Poly1305 using a password-derived key (Argon2id).',
+    'wp.s7.p2': 'Addresses use CashAddr-style Bech32 encoding with network-specific prefixes:',
+    'wp.s7.net': 'Network', 'wp.s7.prefix': 'Prefix', 'wp.s7.example': 'Example',
+    'wp.s7.p3': 'Account types supported: BIP-32 standard, multisig (m-of-n), watch-only, and legacy import.',
+    'wp.s8.title': 'Mining Infrastructure',
+    'wp.s8.p1': 'LMT includes a complete mining stack out of the box:',
+    'wp.s8.l1': '<strong>lmtd</strong> \u2014 Full node with get_block_template and submit_block RPC methods',
+    'wp.s8.l2': '<strong>lmt-stratum-bridge</strong> \u2014 TCP Stratum proxy that translates between XMRig and the node\'s gRPC interface',
+    'wp.s8.l3': '<strong>XMRig fork</strong> \u2014 Modified XMRig that understands LMT-native job format (48-byte RandomX input)',
+    'wp.s8.l4': '<strong>Miner GUI</strong> \u2014 Desktop application for managing bridge and miner processes with real-time metrics',
+    'wp.s8.p2': 'The LMT Stratum protocol uses standard JSON-RPC framing with mining.subscribe, mining.authorize, mining.notify, and mining.submit methods. The bridge includes rate limiting, stale job detection, automatic retry with exponential backoff, and structured logging.',
+    'wp.s9.title': 'Security',
+    'wp.s9.p1': 'LMT inherits the proven security model of the GHOSTDAG consensus protocol and strengthens it with:',
+    'wp.s9.l1': 'RandomX Proof-of-Work provides ASIC resistance, ensuring no single entity can dominate mining',
+    'wp.s9.l2': 'The GHOSTDAG ordering protocol is proven secure under the honest-majority assumption',
+    'wp.s9.l3': 'Pruning proof validation ensures new nodes can securely sync from any state',
+    'wp.s9.l4': 'Transaction scripts use a stack-based virtual machine with BIP-62 compliant encoding',
+    'wp.s9.l5': 'Wallet encryption uses XChaCha20-Poly1305 with Argon2id key derivation (memory-hard)',
+    'wp.s10.title': 'Roadmap',
+    'wp.s10.phase': 'Phase', 'wp.s10.target': 'Target', 'wp.s10.desc': 'Description',
+    'wp.s10.r1c1': 'Genesis', 'wp.s10.r1c3': 'Network launch, initial mining, community building',
+    'wp.s10.r2c1': 'Growth', 'wp.s10.r2c3': 'Exchange listings, mining pools, third-party wallets',
+    'wp.s10.r3c1': 'Crescendo', 'wp.s10.r3c3': 'Automatic upgrade from 1 BPS to 10 BPS at DAA 15,000,000',
+    'wp.s10.r4c1': 'Ecosystem', 'wp.s10.r4c3': 'Smart contracts research, mobile wallet, DEX integration',
+    'wp.footer': 'Built upon Rusty Kaspa (ISC), RandomX by tevador (BSD-3), and XMRig (GPL-3.0).',
+  },
+  es: {
+    'nav.home': 'Inicio',
+    'wp.title': 'Lapis Monetae (LMT) Whitepaper',
+    'wp.version': 'Versi\u00f3n 1.0 \u2014 Abril 2026',
+    'wp.toc': '\u00cdndice',
+    'wp.toc1': 'Resumen', 'wp.toc2': 'Motivaci\u00f3n', 'wp.toc3': 'Consenso', 'wp.toc4': 'Prueba de Trabajo',
+    'wp.toc5': 'Calendario de Emisi\u00f3n', 'wp.toc6': 'Arquitectura de Red', 'wp.toc7': 'Wallet y Direcciones',
+    'wp.toc8': 'Infraestructura de Miner\u00eda', 'wp.toc9': 'Seguridad', 'wp.toc10': 'Hoja de Ruta',
+    'wp.s1.title': 'Resumen',
+    'wp.s1.p1': 'Lapis Monetae (LMT) es una criptomoneda independiente construida sobre un motor de consenso BlockDAG de alto rendimiento. Derivada del c\u00f3digo base de Kaspa en Rust, LMT reemplaza el algoritmo original de Prueba de Trabajo kHeavyHash con RandomX, permitiendo miner\u00eda justa basada en CPU accesible para cualquier persona con una computadora est\u00e1ndar. La red inicia desde su propio bloque g\u00e9nesis sin conexi\u00f3n a ninguna blockchain previa.',
+    'wp.s1.p2': 'LMT tiene un suministro total objetivo de 100,000,000 monedas distribuidas a lo largo de aproximadamente 8 a\u00f1os mediante una curva de emisi\u00f3n deflacionaria suave. La red arranca a 1 bloque por segundo (BPS) y escala a 10 BPS mediante el hardfork Crescendo despu\u00e9s de aproximadamente 6 meses de operaci\u00f3n.',
+    'wp.s2.title': 'Motivaci\u00f3n',
+    'wp.s2.p1': 'El panorama de las criptomonedas est\u00e1 dominado por redes que favorecen hardware especializado (ASICs) o grandes granjas de GPUs, concentrando el poder de miner\u00eda en manos de operaciones bien financiadas. Esto socava la descentralizaci\u00f3n que las criptomonedas fueron dise\u00f1adas para proporcionar.',
+    'wp.s2.p2': 'Lapis Monetae aborda esto utilizando RandomX, un algoritmo de Prueba de Trabajo dise\u00f1ado espec\u00edficamente para ser eficiente en CPUs de prop\u00f3sito general y resistente a la optimizaci\u00f3n por ASICs y GPUs. Combinado con el consenso BlockDAG de alto rendimiento del linaje de investigaci\u00f3n de Kaspa, LMT ofrece confirmaciones r\u00e1pidas, alta capacidad de transacciones y miner\u00eda genuinamente descentralizada.',
+    'wp.s2.p3': 'LMT es un proyecto de lanzamiento justo sin premina, sin ICO, sin impuesto al desarrollador y sin respaldo de capital de riesgo. Cada moneda se gana mediante miner\u00eda.',
+    'wp.s3.title': 'Consenso: BlockDAG con GHOSTDAG',
+    'wp.s3.p1': 'A diferencia de las blockchains tradicionales donde los bloques forman una cadena \u00fanica, LMT utiliza una estructura de Grafo Ac\u00edclico Dirigido (DAG) donde m\u00faltiples bloques pueden crearse simult\u00e1neamente. El protocolo GHOSTDAG determina el orden de los bloques y resuelve conflictos sin descartar bloques paralelos, aumentando dr\u00e1sticamente el rendimiento.',
+    'wp.s3.p2': 'Par\u00e1metros clave del consenso:',
+    'wp.s3.param': 'Par\u00e1metro', 'wp.s3.value': 'Valor',
+    'wp.s3.r1c1': 'Tiempo de bloque (pre-Crescendo)', 'wp.s3.r2c1': 'Tiempo de bloque (post-Crescendo)',
+    'wp.s3.r3c1': 'Activaci\u00f3n de Crescendo (mainnet)', 'wp.s3.r4c1': 'GHOSTDAG K (pre-Crescendo)', 'wp.s3.r5c1': 'Profundidad de finalidad',
+    'wp.s4.title': 'Prueba de Trabajo: RandomX',
+    'wp.s4.p1': 'LMT utiliza RandomX como su \u00fanico algoritmo de Prueba de Trabajo. RandomX fue dise\u00f1ado por el equipo de investigaci\u00f3n de Monero para ser \u00f3ptimamente eficiente en CPUs de prop\u00f3sito general mientras es resistente a ASICs, GPUs y FPGAs.',
+    'wp.s4.p2': 'El pipeline de PoW en LMT funciona de la siguiente manera:',
+    'wp.s4.p3': 'La VM de RandomX ejecuta programas aleatorios generados a partir del hash del encabezado del bloque. Estos programas utilizan intensivamente caracter\u00edsticas de la CPU como operaciones de punto flotante, predicci\u00f3n de ramas, jerarqu\u00eda de cach\u00e9 y operaciones intensivas en memoria, haciendo que el algoritmo sea naturalmente adecuado para CPUs.',
+    'wp.s4.p4': 'El dataset de RandomX (~2 GB) se regenera cada \u00e9poca y se almacena en cach\u00e9 en RAM, asegurando que los patrones de acceso a memoria no puedan ser optimizados por hardware especializado.',
+    'wp.s5.title': 'Calendario de Emisi\u00f3n',
+    'wp.s5.p1': 'LMT tiene un suministro m\u00e1ximo fijo de 100,000,000 monedas (100 millones de LMT). La unidad m\u00e1s peque\u00f1a es 1 sompi = 0.00000001 LMT (10^-8).',
+    'wp.s5.phase': 'Fase', 'wp.s5.duration': 'Duraci\u00f3n', 'wp.s5.reward': 'Recompensa por Bloque',
+    'wp.s5.r1c1': 'Pre-deflacionaria', 'wp.s5.r1c2': '~6 meses (DAA 0 a 15,778,800)', 'wp.s5.r2c1': 'Deflacionaria', 'wp.s5.r2c2': '~7.5 a\u00f1os (426 meses)', 'wp.s5.r2c3': 'Decreciente mensualmente',
+    'wp.s5.p2': 'Despu\u00e9s del per\u00edodo pre-deflacionario, la recompensa por bloque disminuye suavemente cada mes siguiendo una tabla de subsidios calculada. La curva de emisi\u00f3n est\u00e1 dise\u00f1ada para distribuir aproximadamente el 50% de todas las monedas en los primeros 2 a\u00f1os, incentivando la adopci\u00f3n temprana mientras mantiene recompensas de miner\u00eda a largo plazo.',
+    'wp.s6.title': 'Arquitectura de Red',
+    'wp.s6.p1': 'LMT opera una red peer-to-peer completamente independiente. Los nodos se comunican mediante un protocolo personalizado (versi\u00f3n 7) sobre TCP. La red est\u00e1 dise\u00f1ada para rechazar conexiones de redes incompatibles.',
+    'wp.s6.net': 'Red',
+    'wp.s6.p2': 'El software del nodo (lmtd) est\u00e1 escrito en Rust para seguridad de memoria y alto rendimiento. Incluye un motor de consenso completo, stack de red P2P, servidores RPC gRPC y wRPC, indexador UTXO y administrador de miner\u00eda.',
+    'wp.s7.title': 'Wallet y Direcciones',
+    'wp.s7.p1': 'LMT utiliza wallets determin\u00edsticas jer\u00e1rquicas BIP-32 con frases semilla mnem\u00f3nicas BIP-39 (12 o 24 palabras). Las wallets se encriptan con XChaCha20-Poly1305 usando una clave derivada de contrase\u00f1a (Argon2id).',
+    'wp.s7.p2': 'Las direcciones usan codificaci\u00f3n Bech32 estilo CashAddr con prefijos espec\u00edficos de red:',
+    'wp.s7.net': 'Red', 'wp.s7.prefix': 'Prefijo', 'wp.s7.example': 'Ejemplo',
+    'wp.s7.p3': 'Tipos de cuenta soportados: BIP-32 est\u00e1ndar, multifirma (m-de-n), solo lectura e importaci\u00f3n legacy.',
+    'wp.s8.title': 'Infraestructura de Miner\u00eda',
+    'wp.s8.p1': 'LMT incluye un stack completo de miner\u00eda listo para usar:',
+    'wp.s8.l1': '<strong>lmtd</strong> \u2014 Nodo completo con m\u00e9todos RPC get_block_template y submit_block',
+    'wp.s8.l2': '<strong>lmt-stratum-bridge</strong> \u2014 Proxy Stratum TCP que traduce entre XMRig y la interfaz gRPC del nodo',
+    'wp.s8.l3': '<strong>Fork de XMRig</strong> \u2014 XMRig modificado que entiende el formato de trabajo nativo LMT (entrada RandomX de 48 bytes)',
+    'wp.s8.l4': '<strong>GUI de Miner\u00eda</strong> \u2014 Aplicaci\u00f3n de escritorio para gestionar procesos de bridge y miner con m\u00e9tricas en tiempo real',
+    'wp.s8.p2': 'El protocolo Stratum de LMT utiliza enmarcado JSON-RPC est\u00e1ndar con m\u00e9todos mining.subscribe, mining.authorize, mining.notify y mining.submit. El bridge incluye limitaci\u00f3n de velocidad, detecci\u00f3n de trabajos obsoletos, reintento autom\u00e1tico con retroceso exponencial y registro estructurado.',
+    'wp.s9.title': 'Seguridad',
+    'wp.s9.p1': 'LMT hereda el modelo de seguridad probado del protocolo de consenso GHOSTDAG y lo fortalece con:',
+    'wp.s9.l1': 'La Prueba de Trabajo RandomX proporciona resistencia a ASICs, asegurando que ninguna entidad pueda dominar la miner\u00eda',
+    'wp.s9.l2': 'El protocolo de ordenamiento GHOSTDAG est\u00e1 demostrado como seguro bajo el supuesto de mayor\u00eda honesta',
+    'wp.s9.l3': 'La validaci\u00f3n de pruebas de poda asegura que nuevos nodos puedan sincronizar de forma segura desde cualquier estado',
+    'wp.s9.l4': 'Los scripts de transacci\u00f3n usan una m\u00e1quina virtual basada en pila con codificaci\u00f3n compatible con BIP-62',
+    'wp.s9.l5': 'La encriptaci\u00f3n de wallet usa XChaCha20-Poly1305 con derivaci\u00f3n de clave Argon2id (intensiva en memoria)',
+    'wp.s10.title': 'Hoja de Ruta',
+    'wp.s10.phase': 'Fase', 'wp.s10.target': 'Objetivo', 'wp.s10.desc': 'Descripci\u00f3n',
+    'wp.s10.r1c1': 'G\u00e9nesis', 'wp.s10.r1c3': 'Lanzamiento de red, miner\u00eda inicial, construcci\u00f3n de comunidad',
+    'wp.s10.r2c1': 'Crecimiento', 'wp.s10.r2c3': 'Listados en exchanges, pools de miner\u00eda, wallets de terceros',
+    'wp.s10.r3c1': 'Crescendo', 'wp.s10.r3c3': 'Actualizaci\u00f3n autom\u00e1tica de 1 BPS a 10 BPS en DAA 15,000,000',
+    'wp.s10.r4c1': 'Ecosistema', 'wp.s10.r4c3': 'Investigaci\u00f3n de contratos inteligentes, wallet m\u00f3vil, integraci\u00f3n DEX',
+    'wp.footer': 'Construido sobre Rusty Kaspa (ISC), RandomX de tevador (BSD-3) y XMRig (GPL-3.0).',
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lmt-lang', lang);
+  document.getElementById('lang-toggle').textContent = lang === 'en' ? 'ES' : 'EN';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = translations[lang]?.[key];
+    if (val) {
+      if (val.includes('<strong>') || val.includes('<br>')) el.innerHTML = val;
+      else el.textContent = val;
+    }
+  });
+}
+
+function toggleLang() {
+  setLang(currentLang === 'en' ? 'es' : 'en');
+}
+
+// Auto-detect language
+(function() {
+  const saved = localStorage.getItem('lmt-lang');
+  if (saved) { setLang(saved); return; }
+  const browserLang = navigator.language || navigator.userLanguage || 'en';
+  setLang(browserLang.startsWith('es') ? 'es' : 'en');
+})();
+</script>
+
+</body>
+</html>

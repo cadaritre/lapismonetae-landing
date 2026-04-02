@@ -647,6 +647,7 @@
     <li><a href="#features" data-i18n="nav.features">Features</a></li>
     <li><a href="#quickstart" data-i18n="nav.quickstart">Quick Start</a></li>
     <li><a href="#downloads" data-i18n="nav.downloads">Downloads</a></li>
+    <li><a href="whitepaper.html" data-i18n="nav.whitepaper">Whitepaper</a></li>
     <li><a href="https://github.com/cadaritre/Lapis-monetae" target="_blank">GitHub</a></li>
     <li><button class="lang-toggle" id="lang-toggle" aria-label="Switch language"><svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg><span id="lang-label">EN</span></button></li>
   </ul>
@@ -786,11 +787,7 @@
         <span class="file-name">lmtd.exe</span>
         <p data-i18n="downloads.lmtd.desc">The full node. Connects to the LMT P2P network, validates blocks and transactions. Required for everything else to work.</p>
       </div>
-      <div class="download-card cloth-card">
-        <h4><span class="tag tag-required">Required</span> RandomX Library</h4>
-        <span class="file-name">randomx.dll</span>
-        <p data-i18n="downloads.randomx.desc">Native RandomX PoW library. Must be in the same folder as lmtd.exe for block validation to work.</p>
-      </div>
+      <!-- RandomX is statically linked inside lmtd.exe — no separate DLL needed -->
     </div>
   </div>
 
@@ -1017,6 +1014,7 @@
       'nav.features': 'Features',
       'nav.quickstart': 'Quick Start',
       'nav.downloads': 'Downloads',
+      'nav.whitepaper': 'Whitepaper',
       'hero.title': 'The Stone of<br><span class="gradient">Digital Currency</span>',
       'hero.subtitle': 'Lapis Monetae (LMT) \u2014 a fast, fair, and community-driven cryptocurrency powered by RandomX Proof-of-Work. Mine with your CPU, run a node, join the network.',
       'hero.download': 'Download',
@@ -1061,6 +1059,7 @@
       'nav.features': 'Caracter\u00edsticas',
       'nav.quickstart': 'Inicio R\u00e1pido',
       'nav.downloads': 'Descargas',
+      'nav.whitepaper': 'Whitepaper',
       'hero.title': 'La Piedra de la<br><span class="gradient">Moneda Digital</span>',
       'hero.subtitle': 'Lapis Monetae (LMT) \u2014 una criptomoneda r\u00e1pida, justa y comunitaria impulsada por RandomX Proof-of-Work. Mina con tu CPU, ejecuta un nodo, \u00fanete a la red.',
       'hero.download': 'Descargar',
